@@ -1,7 +1,7 @@
 export function Header() {
   return (
     <div>
-      <header className="text-7xl">Testing tailwind</header>
+      <header className="pl-5 text-7xl text-white">Testing tailwind</header>
     </div>
   );
 }
