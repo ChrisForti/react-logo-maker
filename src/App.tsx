@@ -1,9 +1,8 @@
 import { useState } from "react";
-// import { Counter } from "./components/Counter";
 import { Header } from "./components/Header";
-import { Main } from "./components/Main";
 
 function App() {
+  const [margin, setMargin] = useState(0);
   // const [number, setNumber] = useState(0);
   const [brand, setBrand] = useState(""); // create state
 
@@ -32,8 +31,34 @@ function App() {
       >
         submit
       </button>
-      <div>{/* <Counter num={number} setter={setNumber} /> */}</div>
-      <Main />
+      <input // use the state
+        type="text"
+        value={margin}
+        onChange={(event) => {
+          setMargin(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />{" "}
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={brand}
+        onChange={(event) => {
+          setBrand(event.target.value);
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
     </div>
   );
 }
