@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 
 function App() {
   const [margin, setMargin] = useState(0);
+  const [logoSize, setLogoSize] = useState(0);
   // const [number, setNumber] = useState(0);
   const [brand, setBrand] = useState(""); // create state
 
@@ -24,7 +25,7 @@ function App() {
           setBrand(event.target.value);
         }}
         className="mx-auto w-96 rounded"
-      />{" "}
+      />
       <button
         className="rounded bg-slate-400 px-8 py-4 text-lg"
         onClick={handleSubmit}
@@ -38,7 +39,7 @@ function App() {
           setMargin(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
-      />{" "}
+      />
       <button
         className="rounded bg-slate-400 px-8 py-4 text-lg"
         onClick={handleSubmit}
@@ -49,7 +50,21 @@ function App() {
         type="text"
         value={brand}
         onChange={(event) => {
-          setBrand(event.target.value);
+          setLogoSize(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoSize}
+        onChange={(event) => {
+          setLogoSize(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />
@@ -70,4 +85,28 @@ export default App;
 // padding
 // shape
 // margin
-//
+/*
+
+1. Logo Size
+2. Logo Color
+3. Logo Shape
+4. Logo Text
+5. Text Color
+6. Text Size
+7. Font Style
+8. Background Color
+9. Border Color
+10. Border Size
+11. Shadow Color
+12. Shadow Size
+13. Logo Position
+14. Rotation
+15. Transparency
+16. Effects (e.g., gradient, pattern)
+17. Image Upload
+18. Image Filter
+19. Animation
+20. Save/Export
+21. Logo Margin
+22. Logo Padding
+ */
