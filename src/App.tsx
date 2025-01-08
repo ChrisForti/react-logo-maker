@@ -4,6 +4,9 @@ import { Header } from "./components/Header";
 function App() {
   const [margin, setMargin] = useState(0);
   const [logoSize, setLogoSize] = useState(0);
+  const [logoColor, setLogoColor] = useState(0);
+  const [logoShape, setLogoShape] = useState(0);
+  const [logoText, setLogoText] = useState(0);
   // const [number, setNumber] = useState(0);
   const [brand, setBrand] = useState(""); // create state
 
@@ -65,6 +68,48 @@ function App() {
         value={logoSize}
         onChange={(event) => {
           setLogoSize(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoColor}
+        onChange={(event) => {
+          setLogoColor(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoShape}
+        onChange={(event) => {
+          setLogoShape(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoText}
+        onChange={(event) => {
+          setLogoText(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />
