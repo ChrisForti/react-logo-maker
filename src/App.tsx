@@ -7,6 +7,7 @@ function App() {
   const [logoColor, setLogoColor] = useState(0);
   const [logoShape, setLogoShape] = useState(0);
   const [logoText, setLogoText] = useState(0);
+  const [logoStyle, setLogoStyle] = useState(0);
   // const [number, setNumber] = useState(0);
   const [brand, setBrand] = useState(""); // create state
 
@@ -110,6 +111,34 @@ function App() {
         value={logoText}
         onChange={(event) => {
           setLogoText(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoSize}
+        onChange={(event) => {
+          setLogoSize(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoStyle}
+        onChange={(event) => {
+          setLogoStyle(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />
