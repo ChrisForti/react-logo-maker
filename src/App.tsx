@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Header } from "./components/Header";
 
 function App() {
-  const [brand, setBrand] = useState(""); // create state
+  const [brand, setBrand] = useState(""); // create the state
   const [logoSize, setLogoSize] = useState(0);
   const [logoColor, setLogoColor] = useState(0);
   const [logoShape, setLogoShape] = useState(0);
@@ -20,7 +20,6 @@ function App() {
   const [animation, setAnimation] = useState(0);
   const [logoMargin, setLogoMargin] = useState(0);
   const [logoPadding, setLogoPadding] = useState(0);
-  const [] = useState(0);
 
   // const [number, setNumber] = useState(0);
 
@@ -43,13 +42,13 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
+      <button // envoke the state
         className="rounded bg-slate-400 px-8 py-4 text-lg"
         onClick={handleSubmit}
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoSize}
         onChange={(event) => {
@@ -63,7 +62,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoColor}
         onChange={(event) => {
@@ -77,7 +76,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoShape}
         onChange={(event) => {
@@ -91,7 +90,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoText}
         onChange={(event) => {
@@ -105,7 +104,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoSize}
         onChange={(event) => {
@@ -119,7 +118,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoStyle}
         onChange={(event) => {
@@ -133,7 +132,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={backgroundColor}
         onChange={(event) => {
@@ -147,7 +146,7 @@ function App() {
       >
         submit
       </button>{" "}
-      <input // use the state
+      <input
         type="text"
         value={borderColor}
         onChange={(event) => {
@@ -161,7 +160,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={borderSize}
         onChange={(event) => {
@@ -175,7 +174,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoPosition}
         onChange={(event) => {
@@ -189,7 +188,7 @@ function App() {
       >
         submit
       </button>{" "}
-      <input // use the state
+      <input
         type="text"
         value={rotation}
         onChange={(event) => {
@@ -203,7 +202,7 @@ function App() {
       >
         submit
       </button>{" "}
-      <input // use the state
+      <input
         type="text"
         value={transparency}
         onChange={(event) => {
@@ -217,7 +216,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={effects}
         onChange={(event) => {
@@ -231,7 +230,7 @@ function App() {
       >
         submit
       </button>{" "}
-      <input // use the state
+      <input
         type="text"
         value={imageUpload}
         onChange={(event) => {
@@ -245,7 +244,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={imageFilter}
         onChange={(event) => {
@@ -259,7 +258,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={animation}
         onChange={(event) => {
@@ -273,7 +272,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoMargin}
         onChange={(event) => {
@@ -287,7 +286,7 @@ function App() {
       >
         submit
       </button>
-      <input // use the state
+      <input
         type="text"
         value={logoPadding}
         onChange={(event) => {
