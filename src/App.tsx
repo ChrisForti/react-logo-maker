@@ -15,6 +15,10 @@ function App() {
   const [logoPosition, setLogoposition] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [transparency, setTransparency] = useState(0);
+  const [effects, setEffects] = useState(0);
+  const [imageUpload, setImageUpload] = useState(0);
+  const [imageFilter, setImageFilter] = useState(0);
+
   // const [number, setNumber] = useState(0);
 
   function handleSubmit() {
@@ -229,6 +233,48 @@ function App() {
         value={transparency}
         onChange={(event) => {
           setTransparency(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={effects}
+        onChange={(event) => {
+          setEffects(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>{" "}
+      <input // use the state
+        type="text"
+        value={imageUpload}
+        onChange={(event) => {
+          setImageUpload(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={imageFilter}
+        onChange={(event) => {
+          setImageFilter(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />
