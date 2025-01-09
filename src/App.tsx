@@ -2,14 +2,20 @@ import { useState } from "react";
 import { Header } from "./components/Header";
 
 function App() {
+  const [brand, setBrand] = useState(""); // create state
   const [margin, setMargin] = useState(0);
   const [logoSize, setLogoSize] = useState(0);
   const [logoColor, setLogoColor] = useState(0);
   const [logoShape, setLogoShape] = useState(0);
   const [logoText, setLogoText] = useState(0);
   const [logoStyle, setLogoStyle] = useState(0);
+  const [backgroundColor, setBackgroundColor] = useState(0);
+  const [borderColor, setBorderColor] = useState(0);
+  const [borderSize, setBorderSize] = useState(0);
+  const [logoPosition, setLogoposition] = useState(0);
+  const [rotation, setRotation] = useState(0);
+  const [transparency, setTransparency] = useState(0);
   // const [number, setNumber] = useState(0);
-  const [brand, setBrand] = useState(""); // create state
 
   function handleSubmit() {
     // const data = {
@@ -139,6 +145,90 @@ function App() {
         value={logoStyle}
         onChange={(event) => {
           setLogoStyle(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={backgroundColor}
+        onChange={(event) => {
+          setBackgroundColor(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>{" "}
+      <input // use the state
+        type="text"
+        value={borderColor}
+        onChange={(event) => {
+          setBorderColor(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={borderSize}
+        onChange={(event) => {
+          setBorderSize(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoPosition}
+        onChange={(event) => {
+          setLogoposition(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>{" "}
+      <input // use the state
+        type="text"
+        value={rotation}
+        onChange={(event) => {
+          setRotation(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>{" "}
+      <input // use the state
+        type="text"
+        value={transparency}
+        onChange={(event) => {
+          setTransparency(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />
