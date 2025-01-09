@@ -3,7 +3,6 @@ import { Header } from "./components/Header";
 
 function App() {
   const [brand, setBrand] = useState(""); // create state
-  const [margin, setMargin] = useState(0);
   const [logoSize, setLogoSize] = useState(0);
   const [logoColor, setLogoColor] = useState(0);
   const [logoShape, setLogoShape] = useState(0);
@@ -18,6 +17,10 @@ function App() {
   const [effects, setEffects] = useState(0);
   const [imageUpload, setImageUpload] = useState(0);
   const [imageFilter, setImageFilter] = useState(0);
+  const [animation, setAnimation] = useState(0);
+  const [logoMargin, setLogoMargin] = useState(0);
+  const [logoPadding, setLogoPadding] = useState(0);
+  const [] = useState(0);
 
   // const [number, setNumber] = useState(0);
 
@@ -37,34 +40,6 @@ function App() {
         value={brand}
         onChange={(event) => {
           setBrand(event.target.value);
-        }}
-        className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      <input // use the state
-        type="text"
-        value={margin}
-        onChange={(event) => {
-          setMargin(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      <input // use the state
-        type="text"
-        value={brand}
-        onChange={(event) => {
-          setLogoSize(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />
@@ -284,6 +259,48 @@ function App() {
       >
         submit
       </button>
+      <input // use the state
+        type="text"
+        value={animation}
+        onChange={(event) => {
+          setAnimation(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoMargin}
+        onChange={(event) => {
+          setLogoMargin(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
+      <input // use the state
+        type="text"
+        value={logoPadding}
+        onChange={(event) => {
+          setLogoPadding(Number(event.target.value));
+        }}
+        className="mx-auto w-96 rounded"
+      />
+      <button
+        className="rounded bg-slate-400 px-8 py-4 text-lg"
+        onClick={handleSubmit}
+      >
+        submit
+      </button>
     </div>
   );
 }
@@ -316,7 +333,6 @@ export default App;
 17. Image Upload
 18. Image Filter
 19. Animation
-20. Save/Export
-21. Logo Margin
-22. Logo Padding
+20. Logo Margin
+21. Logo Padding
  */
