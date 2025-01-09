@@ -1,4 +1,4 @@
-# Minimal feilds for a logo maker app
+# Every piece of state, and input for all things needed in a minimal logo maker in the App.tsx
 
 1. Logo Size
 2. Logo Color
