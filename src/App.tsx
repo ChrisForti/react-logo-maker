@@ -42,7 +42,7 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button // envoke the state
+      <button // Allow the app access to the state
         className="rounded bg-slate-400 px-8 py-4 text-lg"
         onClick={handleSubmit}
       >
