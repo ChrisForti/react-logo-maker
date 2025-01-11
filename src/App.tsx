@@ -21,8 +21,6 @@ function App() {
   const [logoMargin, setLogoMargin] = useState(0);
   const [logoPadding, setLogoPadding] = useState(0);
 
-  // const [number, setNumber] = useState(0);
-
   function handleSubmit() {
     // const data = {
     //   brand,
