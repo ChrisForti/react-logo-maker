@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-type SetterProps = {
-  num: number;
-};
+// type SetterProps = {
+//   num: number;
+// };
 
 export default function Counter() {
   const [number, setNumber] = useState(0);
