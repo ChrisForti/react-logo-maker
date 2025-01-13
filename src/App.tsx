@@ -7,9 +7,9 @@ function App() {
   const [logoSize, setLogoSize] = useState(0);
   const [logoColor, setLogoColor] = useState("");
   const [logoShape, setLogoShape] = useState("");
-  const [logoText, setLogoText] = useState(0);
-  const [logoStyle, setLogoStyle] = useState(0);
-  const [backgroundColor, setBackgroundColor] = useState(0);
+  const [logoText, setLogoText] = useState("");
+  const [logoStyle, setLogoStyle] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState("");
   const [borderColor, setBorderColor] = useState(0);
   const [borderSize, setBorderSize] = useState(0);
   const [logoPosition, setLogoposition] = useState(0);
@@ -46,30 +46,17 @@ function App() {
         value={logoShape}
         setValue={setLogoShape}
       />
-      <input
-        type="text"
-        value={logoText}
-        onChange={(event) => {
-          setLogoText(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />
-      <input
-        type="text"
+      <StringInput label="logo text" value={logoText} setValue={setLogoText} />
+      <StringInput
+        label="Logo Style"
         value={logoStyle}
-        onChange={(event) => {
-          setLogoStyle(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setLogoStyle}
       />
-      <input
-        type="text"
+      <StringInput
+        label="background Color"
         value={backgroundColor}
-        onChange={(event) => {
-          setBackgroundColor(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />{" "}
+        setValue={setBackgroundColor}
+      />
       <input
         type="text"
         value={borderColor}
