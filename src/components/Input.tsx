@@ -6,7 +6,7 @@ type StringInputProps = {
 
 export function StringInput({ label, value, setValue }: StringInputProps) {
   return (
-    <>
+    <div className="mx-auto w-fit">
       <div>{label}</div>
       <input
         type="text"
@@ -16,7 +16,7 @@ export function StringInput({ label, value, setValue }: StringInputProps) {
         }}
         className="mx-auto w-96 rounded"
       />
-    </>
+    </div>
   );
 }
 
