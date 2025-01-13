@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Header } from "./components/Header";
-import { StringInput, NumberInput } from "./components/Input";
+import { Header } from "./components/Header.tsx";
+import { StringInput, NumberInput } from "./components/Input.tsx";
 
 function App() {
   const [brand, setBrand] = useState(""); // create the state
