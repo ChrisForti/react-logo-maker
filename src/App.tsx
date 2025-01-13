@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Header } from "./components/Header";
+import { StringInput, NumberInput } from "./components/Input";
 
 function App() {
   const [brand, setBrand] = useState(""); // create the state
   const [logoSize, setLogoSize] = useState(0);
-  const [logoColor, setLogoColor] = useState(0);
+  const [logoColor, setLogoColor] = useState("");
   const [logoShape, setLogoShape] = useState(0);
   const [logoText, setLogoText] = useState(0);
   const [logoStyle, setLogoStyle] = useState(0);
@@ -22,59 +23,25 @@ function App() {
   const [logoPadding, setLogoPadding] = useState(0);
 
   function handleSubmit() {
-    // const data = {
-    //   brand,
-    //   subBrand,
-    // };
-    console.log("Clicked!");
+    const data = {
+      brand,
+      logoSize,
+      logoColor,
+    };
+    console.log(data);
   }
 
   return (
     <div className="min-w96 flex min-h-screen flex-col gap-4 bg-slate-600 text-center">
-      <Header num={30000} />
-      <input // use the state
-        type="text"
-        value={brand}
-        onChange={(event) => {
-          setBrand(event.target.value);
-        }}
-        className="mx-auto w-96 rounded"
-      />
-      <button // Allow the app access to the state
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      <input
-        type="text"
-        value={logoSize}
-        onChange={(event) => {
-          setLogoSize(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      <input
-        type="text"
+      <Header />
+      <StringInput label="Brand" value={brand} setValue={setBrand} />
+      <NumberInput label="Logo Size" value={logoSize} setValue={setLogoSize} />
+      <StringInput
+        label="Logo Color"
         value={logoColor}
-        onChange={(event) => {
-          setLogoColor(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setLogoColor}
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      <input
+      <input // TODO replace the rest of the inputs
         type="text"
         value={logoShape}
         onChange={(event) => {
@@ -82,12 +49,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={logoText}
@@ -96,26 +57,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      <input
-        type="text"
-        value={logoSize}
-        onChange={(event) => {
-          setLogoSize(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={logoStyle}
@@ -124,12 +65,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={backgroundColor}
@@ -137,13 +72,7 @@ function App() {
           setBackgroundColor(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>{" "}
+      />{" "}
       <input
         type="text"
         value={borderColor}
@@ -152,12 +81,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={borderSize}
@@ -166,12 +89,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={logoPosition}
@@ -179,13 +96,7 @@ function App() {
           setLogoposition(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>{" "}
+      />{" "}
       <input
         type="text"
         value={rotation}
@@ -193,13 +104,7 @@ function App() {
           setRotation(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>{" "}
+      />{" "}
       <input
         type="text"
         value={transparency}
@@ -208,12 +113,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={effects}
@@ -221,13 +120,7 @@ function App() {
           setEffects(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
-      />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>{" "}
+      />{" "}
       <input
         type="text"
         value={imageUpload}
@@ -236,12 +129,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={imageFilter}
@@ -250,12 +137,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={animation}
@@ -264,12 +145,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={logoMargin}
@@ -278,12 +153,6 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
       <input
         type="text"
         value={logoPadding}
@@ -292,7 +161,7 @@ function App() {
         }}
         className="mx-auto w-96 rounded"
       />
-      <button
+      <button // Allow the app access to the state
         className="rounded bg-slate-400 px-8 py-4 text-lg"
         onClick={handleSubmit}
       >
