@@ -6,7 +6,7 @@ function App() {
   const [brand, setBrand] = useState(""); // create the state
   const [logoSize, setLogoSize] = useState(0);
   const [logoColor, setLogoColor] = useState("");
-  const [logoShape, setLogoShape] = useState(0);
+  const [logoShape, setLogoShape] = useState("");
   const [logoText, setLogoText] = useState(0);
   const [logoStyle, setLogoStyle] = useState(0);
   const [backgroundColor, setBackgroundColor] = useState(0);
@@ -41,13 +41,10 @@ function App() {
         value={logoColor}
         setValue={setLogoColor}
       />
-      <input // TODO replace the rest of the inputs
-        type="text"
+      <StringInput
+        label="logo Shape"
         value={logoShape}
-        onChange={(event) => {
-          setLogoShape(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setLogoShape}
       />
       <input
         type="text"
