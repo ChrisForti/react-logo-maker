@@ -15,10 +15,10 @@ function App() {
   const [logoPosition, setLogoposition] = useState("");
   const [rotation, setRotation] = useState("");
   const [transparency, setTransparency] = useState(0);
-  const [effects, setEffects] = useState(0);
-  const [imageUpload, setImageUpload] = useState(0);
-  const [imageFilter, setImageFilter] = useState(0);
-  const [animation, setAnimation] = useState(0);
+  const [effects, setEffects] = useState("");
+  const [imageUpload, setImageUpload] = useState("");
+  const [imageFilter, setImageFilter] = useState("");
+  const [animation, setAnimation] = useState("");
   const [logoMargin, setLogoMargin] = useState(0);
   const [logoPadding, setLogoPadding] = useState(0);
 
@@ -73,61 +73,36 @@ function App() {
         setValue={setLogoposition}
       />
       <StringInput label="Rotation" value={rotation} setValue={setRotation} />
-      <input
-        type="text"
+      <NumberInput
+        label="Transparency"
         value={transparency}
-        onChange={(event) => {
-          setTransparency(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setTransparency}
       />
-      <input
-        type="text"
-        value={effects}
-        onChange={(event) => {
-          setEffects(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />{" "}
-      <input
-        type="text"
+      <StringInput label="Effects" value={effects} setValue={setEffects} />
+      <StringInput
+        label="Image uploade"
         value={imageUpload}
-        onChange={(event) => {
-          setImageUpload(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setImageUpload}
       />
-      <input
-        type="text"
+      <StringInput
+        label="Image filter"
         value={imageFilter}
-        onChange={(event) => {
-          setImageFilter(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setImageFilter}
       />
-      <input
-        type="text"
+      <StringInput
+        label="Animation"
         value={animation}
-        onChange={(event) => {
-          setAnimation(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setAnimation}
       />
-      <input
-        type="text"
+      <NumberInput
+        label="Logo Margin"
         value={logoMargin}
-        onChange={(event) => {
-          setLogoMargin(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setLogoMargin}
       />
-      <input
-        type="text"
+      <NumberInput
+        label="logo Padding"
         value={logoPadding}
-        onChange={(event) => {
-          setLogoPadding(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setLogoPadding}
       />
       <button // Allow the app access to the state
         className="rounded bg-slate-400 px-8 py-4 text-lg"
