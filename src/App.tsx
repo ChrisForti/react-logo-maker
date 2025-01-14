@@ -10,10 +10,10 @@ function App() {
   const [logoText, setLogoText] = useState("");
   const [logoStyle, setLogoStyle] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("");
-  const [borderColor, setBorderColor] = useState(0);
+  const [borderColor, setBorderColor] = useState("");
   const [borderSize, setBorderSize] = useState(0);
-  const [logoPosition, setLogoposition] = useState(0);
-  const [rotation, setRotation] = useState(0);
+  const [logoPosition, setLogoposition] = useState("");
+  const [rotation, setRotation] = useState("");
   const [transparency, setTransparency] = useState(0);
   const [effects, setEffects] = useState(0);
   const [imageUpload, setImageUpload] = useState(0);
@@ -57,38 +57,22 @@ function App() {
         value={backgroundColor}
         setValue={setBackgroundColor}
       />
-      <input
-        type="text"
+      <StringInput
+        label="Border color"
         value={borderColor}
-        onChange={(event) => {
-          setBorderColor(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setBorderColor}
       />
-      <input
-        type="text"
+      <NumberInput
+        label="Border Size"
         value={borderSize}
-        onChange={(event) => {
-          setBorderSize(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
+        setValue={setBorderSize}
       />
-      <input
-        type="text"
+      <StringInput
+        label="Logo position"
         value={logoPosition}
-        onChange={(event) => {
-          setLogoposition(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />{" "}
-      <input
-        type="text"
-        value={rotation}
-        onChange={(event) => {
-          setRotation(Number(event.target.value));
-        }}
-        className="mx-auto w-96 rounded"
-      />{" "}
+        setValue={setLogoposition}
+      />
+      <StringInput label="Rotation" value={rotation} setValue={setRotation} />
       <input
         type="text"
         value={transparency}
