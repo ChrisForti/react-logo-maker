@@ -27,6 +27,21 @@ function App() {
       brand,
       logoSize,
       logoColor,
+      logoShape,
+      logoText,
+      logoStyle,
+      backgroundColor,
+      borderColor,
+      borderSize,
+      logoPosition,
+      rotation,
+      transparency,
+      effects,
+      imageUpload,
+      imageFilter,
+      animation,
+      logoMargin,
+      logoPadding,
     };
     console.log(data);
   }
