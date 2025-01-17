@@ -35,7 +35,7 @@ export function NumberInput({ label, value, setValue }: NumberInputProps) {
         type="number"
         value={value}
         onChange={(event) => {
-          setValue(Number(event.target.value)); // casted number in to the mix to handle ints.
+          setValue(Number(event.target.value)); // Casted Number() in to the mix to handle ints.
         }}
         className="mx-auto w-96 rounded"
       />
