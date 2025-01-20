@@ -20,7 +20,8 @@ function App() {
   const [imageFilter, setImageFilter] = useState("");
   const [animation, setAnimation] = useState("");
   const [logoMargin, setLogoMargin] = useState(0);
-  const [logoPadding, setLogoPadding] = useState(0);
+  const [logoPaddingX, setLogoPaddingX] = useState(0);
+  const [logoPaddingY, setLogoPaddingY] = useState(0);
 
   function handleSubmit() {
     const data = {
@@ -41,7 +42,8 @@ function App() {
       imageFilter,
       animation,
       logoMargin,
-      logoPadding,
+      logoPaddingX,
+      logoPaddingY,
     };
     console.log(data);
   }
@@ -49,6 +51,13 @@ function App() {
   return (
     <div className="min-w96 flex min-h-screen flex-col gap-4 bg-slate-600 text-center">
       <Header />
+      {/* <form // optional handle submit override
+        className="flex flex-col gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      /> */}
       <StringInput label="Brand" value={brand} setValue={setBrand} />
       <NumberInput label="Logo Size" value={logoSize} setValue={setLogoSize} />
       <StringInput
@@ -116,8 +125,14 @@ function App() {
       />
       <NumberInput
         label="logo Padding"
-        value={logoPadding}
-        setValue={setLogoPadding}
+        value={logoPaddingX}
+        setValue={setLogoPaddingX}
+      />
+
+      <NumberInput
+        label="logo Padding"
+        value={logoPaddingY}
+        setValue={setLogoPaddingY}
       />
       <button // Allow the app access to the state
         className="rounded bg-slate-400 px-8 py-4 text-lg"
@@ -130,3 +145,5 @@ function App() {
 }
 
 export default App;
+// Picker window edit to wrap stuff in components
+// containeriz all my state in app.tsx

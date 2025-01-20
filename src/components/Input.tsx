@@ -1,4 +1,4 @@
-type StringInputProps = {
+export type StringInputProps = {
   label: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -20,18 +20,27 @@ export function StringInput({ label, value, setValue }: StringInputProps) {
   );
 }
 
-type NumberInputProps = {
+export type NumberInputProps = {
   label: string;
   value: number;
   setValue: React.Dispatch<React.SetStateAction<number>>;
+  min?: number;
+  max?: number;
 };
 
-export function NumberInput({ label, value, setValue }: NumberInputProps) {
+export function NumberInput({
+  label,
+  value,
+  setValue,
+  min,
+  max,
+}: NumberInputProps) {
   return (
     <>
       <div>{label}</div>
       <input
-        min={0}
+        min={min}
+        max={max}
         type="number"
         value={value}
         onChange={(event) => {
