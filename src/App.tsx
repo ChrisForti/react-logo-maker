@@ -57,7 +57,7 @@ function App() {
           e.preventDefault();
           handleSubmit();
         }}
-      /> */}
+      > */}
       <StringInput label="Brand" value={brand} setValue={setBrand} />
       <NumberInput label="Logo Size" value={logoSize} setValue={setLogoSize} />
       <StringInput
@@ -140,6 +140,7 @@ function App() {
       >
         submit
       </button>
+      {/* <form/> */}
     </div>
   );
 }
