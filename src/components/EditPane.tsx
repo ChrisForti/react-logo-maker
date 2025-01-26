@@ -49,6 +49,22 @@ export default function EditPane({
       { label: "Log Size", value: logoSize, setValue: setLogoSize },
       { label: "border Size", value: borderSize, setValue: setBorderSize },
     ];
+    const paddings = [
+      {
+        label: "Log Padding X",
+        value: logoPaddingX,
+        setValue: setLogoPaddingX,
+      },
+      {
+        label: "Log Padding Y",
+        value: logoPaddingY,
+        setValue: setLogoPaddingY,
+      },
+    ];
+    const images = [
+      { label: "Image Upload", value: imageUpload, setValue: setImageUpload },
+      { label: "Image Filter", value: imageFilter, setValue: setImageFilter },
+    ];
 
     function handleSubmit() {
       const data = {
