@@ -6,7 +6,7 @@ export type StringInputProps = {
 
 export function StringInput({ label, value, setValue }: StringInputProps) {
   return (
-    <>
+    <div>
       <div>{label}</div>
       <input
         type="text"
@@ -14,9 +14,9 @@ export function StringInput({ label, value, setValue }: StringInputProps) {
         onChange={(event) => {
           setValue(event.target.value);
         }}
-        className="mx-auto w-96 rounded"
+        className="mx-auto w-20 rounded px-2"
       />
-    </>
+    </div>
   );
 }
 
@@ -44,7 +44,7 @@ export function NumberInput({
         type="number"
         value={value}
         onChange={(event) => {
-          setValue(Number(event.target.value)); // Casted Number() in to the mix to handle ints.
+          setValue(Number(event.target.value));
         }}
         className="mx-auto w-96 rounded"
       />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Header } from "./components/Header";
 import { StringInput, NumberInput } from "./components/Input";
+import EditPane from "./components/EditPane";
 
 function App() {
   const [brand, setBrand] = useState(""); // create the state
@@ -22,6 +23,33 @@ function App() {
   const [logoMargin, setLogoMargin] = useState(0);
   const [logoPaddingX, setLogoPaddingX] = useState(0);
   const [logoPaddingY, setLogoPaddingY] = useState(0);
+
+  // Define the arrays
+  const colors = [
+    { label: "Logo", value: logoColor, setValue: setLogoColor },
+    { label: "Border", value: borderColor, setValue: setBorderColor },
+    {
+      label: "Background",
+      value: backgroundColor,
+      setValue: setBackgroundColor,
+    },
+  ];
+  const sizes = [
+    { label: "Logo", value: logoSize, setValue: setLogoSize },
+    { label: "Border", value: borderSize, setValue: setBorderSize },
+  ];
+  const paddings = [
+    {
+      label: "Logo X",
+      value: logoPaddingX,
+      setValue: setLogoPaddingX,
+    },
+    {
+      label: "Logo Y",
+      value: logoPaddingY,
+      setValue: setLogoPaddingY,
+    },
+  ];
 
   function handleSubmit() {
     const data = {
@@ -51,96 +79,11 @@ function App() {
   return (
     <div className="min-w96 flex min-h-screen flex-col gap-4 bg-slate-600 text-center">
       <Header />
-      {/* <form // optional handle submit override
-        className="flex flex-col gap-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      > */}
-      <StringInput label="Brand" value={brand} setValue={setBrand} />
-      <NumberInput label="Logo Size" value={logoSize} setValue={setLogoSize} />
-      <StringInput
-        label="Logo Color"
-        value={logoColor}
-        setValue={setLogoColor}
+      <EditPane
+        colorInputs={colors}
+        sizeInputs={sizes}
+        paddingInputs={paddings}
       />
-      <StringInput
-        label="logo Shape"
-        value={logoShape}
-        setValue={setLogoShape}
-      />
-      <StringInput label="logo text" value={logoText} setValue={setLogoText} />
-      <StringInput
-        label="Logo Style"
-        value={logoStyle}
-        setValue={setLogoStyle}
-      />
-      <StringInput
-        label="background Color"
-        value={backgroundColor}
-        setValue={setBackgroundColor}
-      />
-      <StringInput
-        label="Border color"
-        value={borderColor}
-        setValue={setBorderColor}
-      />
-      <NumberInput
-        label="Border Size"
-        value={borderSize}
-        setValue={setBorderSize}
-      />
-      <StringInput
-        label="Logo position"
-        value={logoPosition}
-        setValue={setLogoposition}
-      />
-      <StringInput label="Rotation" value={rotation} setValue={setRotation} />
-      <NumberInput
-        label="Transparency"
-        value={transparency}
-        setValue={setTransparency}
-      />
-      <StringInput label="Effects" value={effects} setValue={setEffects} />
-      <StringInput
-        label="Image uploade"
-        value={imageUpload}
-        setValue={setImageUpload}
-      />
-      <StringInput
-        label="Image filter"
-        value={imageFilter}
-        setValue={setImageFilter}
-      />
-      <StringInput
-        label="Animation"
-        value={animation}
-        setValue={setAnimation}
-      />
-      <NumberInput
-        label="Logo Margin"
-        value={logoMargin}
-        setValue={setLogoMargin}
-      />
-      <NumberInput
-        label="logo Padding"
-        value={logoPaddingX}
-        setValue={setLogoPaddingX}
-      />
-
-      <NumberInput
-        label="logo Padding"
-        value={logoPaddingY}
-        setValue={setLogoPaddingY}
-      />
-      <button // Allow the app access to the state
-        className="rounded bg-slate-400 px-8 py-4 text-lg"
-        onClick={handleSubmit}
-      >
-        submit
-      </button>
-      {/* <form/> */}
     </div>
   );
 }
