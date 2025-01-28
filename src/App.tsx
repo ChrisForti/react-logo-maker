@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Header } from "./components/Header";
-import { StringInput, NumberInput } from "./components/Input";
 import EditPane from "./components/EditPane";
+import { StringInputProps } from "./components/Input";
 
 function App() {
   const [brand, setBrand] = useState(""); // create the state
@@ -17,14 +17,70 @@ function App() {
   const [rotation, setRotation] = useState("");
   const [transparency, setTransparency] = useState(0);
   const [effects, setEffects] = useState("");
-  const [imageUpload, setImageUpload] = useState("");
-  const [imageFilter, setImageFilter] = useState("");
+  const [imageUpload, setImageUpload] = useState(""); // probably need to be boolean
+  const [imageFilter, setImageFilter] = useState(""); // probably need to be boolean
   const [animation, setAnimation] = useState("");
   const [logoMargin, setLogoMargin] = useState(0);
   const [logoPaddingX, setLogoPaddingX] = useState(0);
   const [logoPaddingY, setLogoPaddingY] = useState(0);
 
   // Define the arrays
+  const brandInput = { label: "brand", value: brand, setValue: setBrand };
+  const shapeInput = {
+    label: "Logo Shape",
+    value: logoShape,
+    setValue: setLogoShape,
+  };
+  const textInput = {
+    label: "Logo Text",
+    value: logoText,
+    setValue: setLogoText,
+  };
+  const styleInput = {
+    label: "Logo Style",
+    value: logoStyle,
+    setValue: setLogoStyle,
+  };
+  const positionInput = {
+    label: "Logo position",
+    value: logoPosition,
+    setValue: setLogoposition,
+  };
+  const rotationInput = {
+    label: "Rotation",
+    value: rotation,
+    setValue: setRotation,
+  };
+  const transparencyInput = {
+    label: "Transparency",
+    value: transparency,
+    setValue: setTransparency,
+  };
+  const effectsInput = {
+    label: "Effects",
+    value: effects,
+    setValue: setEffects,
+  };
+  const imgUploadInput = {
+    label: "Image Upload",
+    value: imageUpload,
+    setValue: setImageUpload,
+  };
+  const imgFilterInput = {
+    label: "Image Filter",
+    value: imageFilter,
+    setValue: setImageFilter,
+  };
+  const animationInput = {
+    label: "Animation",
+    value: animation,
+    setValue: setAnimation,
+  };
+  const marginInput = {
+    label: "Logo Margin",
+    value: logoMargin,
+    setValue: setLogoMargin,
+  };
   const colors = [
     { label: "Logo", value: logoColor, setValue: setLogoColor },
     { label: "Border", value: borderColor, setValue: setBorderColor },
@@ -51,35 +107,22 @@ function App() {
     },
   ];
 
-  function handleSubmit() {
-    const data = {
-      brand,
-      logoSize,
-      logoColor,
-      logoShape,
-      logoText,
-      logoStyle,
-      backgroundColor,
-      borderColor,
-      borderSize,
-      logoPosition,
-      rotation,
-      transparency,
-      effects,
-      imageUpload,
-      imageFilter,
-      animation,
-      logoMargin,
-      logoPaddingX,
-      logoPaddingY,
-    };
-    console.log(data);
-  }
-
   return (
     <div className="min-w96 flex min-h-screen flex-col gap-4 bg-slate-600 text-center">
       <Header />
       <EditPane
+        brandInput={brandInput}
+        shapeInput={shapeInput}
+        textInput={textInput}
+        styleInput={styleInput}
+        positionInput={positionInput}
+        rotationInput={rotationInput}
+        transparencyInput={transparencyInput}
+        effectsInput={effectsInput}
+        imgUploadInput={imgUploadInput}
+        imgFilterinput={imgFilterInput}
+        animationInput={animationInput}
+        marginInput={marginInput}
         colorInputs={colors}
         sizeInputs={sizes}
         paddingInputs={paddings}

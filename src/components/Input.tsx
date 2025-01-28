@@ -9,6 +9,7 @@ export function StringInput({ label, value, setValue }: StringInputProps) {
     <div>
       <div>{label}</div>
       <input
+        name={label}
         type="text"
         value={value}
         onChange={(event) => {
@@ -39,6 +40,7 @@ export function NumberInput({
     <>
       <div>{label}</div>
       <input
+        name={label}
         min={min}
         max={max}
         type="number"
