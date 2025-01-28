@@ -57,6 +57,7 @@ export default function EditPane({
           type="text"
           value={brandInput.value}
           onChange={(event) => brandInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Shape</h1>
@@ -67,6 +68,7 @@ export default function EditPane({
           type="text"
           value={shapeInput.value}
           onChange={(event) => shapeInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Text</h1>
@@ -77,6 +79,7 @@ export default function EditPane({
           type="text"
           value={textInput.value}
           onChange={(event) => textInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Style</h1>
@@ -87,6 +90,7 @@ export default function EditPane({
           type="text"
           value={styleInput.value}
           onChange={(event) => styleInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Position</h1>
@@ -97,6 +101,7 @@ export default function EditPane({
           type="text"
           value={positionInput.value}
           onChange={(event) => positionInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Rotation</h1>
@@ -107,6 +112,7 @@ export default function EditPane({
           type="text"
           value={rotationInput.value}
           onChange={(event) => rotationInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Transparency</h1>
@@ -119,6 +125,7 @@ export default function EditPane({
           onChange={(event) =>
             transparencyInput.setValue(Number(event.target.value))
           }
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Effects</h1>
@@ -129,6 +136,7 @@ export default function EditPane({
           type="text"
           value={effectsInput.value}
           onChange={(event) => effectsInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Image Upload</h1>
@@ -139,6 +147,7 @@ export default function EditPane({
           type="text"
           value={imgUploadInput.value}
           onChange={(event) => imgUploadInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Image</h1>
@@ -149,6 +158,7 @@ export default function EditPane({
           type="text"
           value={imgFilterinput.value}
           onChange={(event) => imgFilterinput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Animation</h1>
@@ -159,6 +169,7 @@ export default function EditPane({
           type="text"
           value={animationInput.value}
           onChange={(event) => animationInput.setValue(event.target.value)}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">margin</h1>
@@ -169,6 +180,7 @@ export default function EditPane({
           type="text"
           value={marginInput.value}
           onChange={(event) => marginInput.setValue(Number(event.target.value))}
+          className="w-30 mx-auto rounded"
         />
       </div>
       <h1 className="text-3xl">Colors</h1>
@@ -191,43 +203,47 @@ export default function EditPane({
         })}
       </div>
       <h1 className="text-3xl">Size</h1>
-      {sizeInputs.map(({ label, value, setValue, min, max }) => {
-        return (
-          <div>
-            <div>{label}</div>
-            <input
-              name={label}
-              min={min}
-              max={max}
-              type="number"
-              value={value}
-              onChange={(event) => {
-                setValue(Number(event.target.value));
-              }}
-              className="mx-auto w-96 rounded"
-            />
-          </div>
-        );
-      })}
+      <div className="mx-auto flex gap-4">
+        {sizeInputs.map(({ label, value, setValue, min, max }) => {
+          return (
+            <div>
+              <div>{label}</div>
+              <input
+                name={label}
+                min={min}
+                max={max}
+                type="number"
+                value={value}
+                onChange={(event) => {
+                  setValue(Number(event.target.value));
+                }}
+                className="mx-auto w-20 rounded"
+              />
+            </div>
+          );
+        })}
+      </div>
       <h1 className="text-3xl">Padding</h1>
-      {paddingInputs.map(({ label, value, setValue, min, max }) => {
-        return (
-          <div>
-            <div>{label}</div>
-            <input
-              name={label}
-              min={min}
-              max={max}
-              type="number"
-              value={value}
-              onChange={(event) => {
-                setValue(Number(event.target.value));
-              }}
-              className="mx-auto w-96 rounded"
-            />
-          </div>
-        );
-      })}
+      <div className="mx-auto flex gap-4">
+        {paddingInputs.map(({ label, value, setValue, min, max }) => {
+          return (
+            <div>
+              <div>{label}</div>
+              <input
+                name={label}
+                min={min}
+                max={max}
+                type="number"
+                value={value}
+                onChange={(event) => {
+                  setValue(Number(event.target.value));
+                }}
+                className="mx-auto w-20 rounded"
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
