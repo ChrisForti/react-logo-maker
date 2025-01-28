@@ -150,7 +150,7 @@ export default function EditPane({
           className="w-30 mx-auto rounded"
         />
       </div>
-      <h1 className="text-3xl">Image</h1>
+      <h1 className="text-3xl">Image Filter</h1>
       <div>
         <div>{imgFilterinput.label}</div>
         <input
@@ -244,6 +244,13 @@ export default function EditPane({
           );
         })}
       </div>
+      <button
+        type="submit"
+        className="mx-auto mt-4 rounded bg-blue-500 px-4 py-2 text-black hover:bg-red-600"
+        onClick={handleSubmit}
+      >
+        Submit
+      </button>
     </div>
   );
 }
