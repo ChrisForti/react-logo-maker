@@ -244,13 +244,6 @@ export default function EditPane({
           );
         })}
       </div>
-      <button
-        type="submit"
-        className="mx-auto mt-4 rounded bg-blue-500 px-4 py-2 text-black hover:bg-red-600"
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
     </div>
   );
 }

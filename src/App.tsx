@@ -107,6 +107,30 @@ function App() {
     },
   ];
 
+  function handleSubmit() {
+    const data = {
+      brand,
+      logoSize,
+      logoColor,
+      logoShape,
+      logoText,
+      backgroundColor,
+      borderColor,
+      borderSize,
+      logoPosition,
+      rotation,
+      transparency,
+      effects,
+      imageUpload,
+      imageFilter,
+      animation,
+      logoMargin,
+      logoPaddingX,
+      logoPaddingY,
+    };
+    console.log("Logo Data: ", data);
+  }
+
   return (
     <div className="min-w96 flex min-h-screen flex-col gap-4 bg-slate-600 text-center">
       <Header />
@@ -127,6 +151,13 @@ function App() {
         sizeInputs={sizes}
         paddingInputs={paddings}
       />
+      <button
+        type="submit"
+        className="mx-auto mt-4 rounded bg-blue-500 px-4 py-2 text-black hover:bg-red-600"
+        onClick={handleSubmit}
+      >
+        Submit
+      </button>
     </div>
   );
 }
