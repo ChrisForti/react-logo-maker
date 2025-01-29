@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Header } from "./components/Header";
 import EditPane from "./components/EditPane";
-import { StringInputProps } from "./components/Input";
 
 function App() {
   const [brand, setBrand] = useState(""); // create the state
