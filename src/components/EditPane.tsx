@@ -48,7 +48,7 @@ export default function EditPane({
   paddingInputs,
 }: EditPaneProps) {
   return (
-    <div className="flex flex-col gap-2 text-left">
+    <div className="flex flex-col gap-2 pl-2 text-left">
       <h1 className="text-3xl">Brand</h1>
       <div>
         <div>{brandInput.label}</div>
@@ -183,7 +183,7 @@ export default function EditPane({
           className="w-30 mx-auto rounded"
         />
       </div>
-      <div>
+      <div className="">
         <h1 className="text-left text-3xl">Colors</h1>
         <div className="mx-auto flex gap-4">
           {colorInputs.map(({ label, value, setValue }) => {
