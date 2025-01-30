@@ -48,7 +48,7 @@ export default function EditPane({
   paddingInputs,
 }: EditPaneProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 text-left">
       <h1 className="text-3xl">Brand</h1>
       <div>
         <div>{brandInput.label}</div>
@@ -183,66 +183,68 @@ export default function EditPane({
           className="w-30 mx-auto rounded"
         />
       </div>
-      <h1 className="text-3xl">Colors</h1>
-      <div className="mx-auto flex gap-4">
-        {colorInputs.map(({ label, value, setValue }) => {
-          return (
-            <div>
-              <div>{label}</div>
-              <input
-                name={label}
-                type="text"
-                value={value}
-                onChange={(event) => {
-                  setValue(event.target.value);
-                }}
-                className="mx-auto w-20 rounded px-2"
-              />
-            </div>
-          );
-        })}
-      </div>
-      <h1 className="text-3xl">Size</h1>
-      <div className="mx-auto flex gap-4">
-        {sizeInputs.map(({ label, value, setValue, min, max }) => {
-          return (
-            <div>
-              <div>{label}</div>
-              <input
-                name={label}
-                min={min}
-                max={max}
-                type="number"
-                value={value}
-                onChange={(event) => {
-                  setValue(Number(event.target.value));
-                }}
-                className="mx-auto w-20 rounded"
-              />
-            </div>
-          );
-        })}
-      </div>
-      <h1 className="text-3xl">Padding</h1>
-      <div className="mx-auto flex gap-4">
-        {paddingInputs.map(({ label, value, setValue, min, max }) => {
-          return (
-            <div>
-              <div>{label}</div>
-              <input
-                name={label}
-                min={min}
-                max={max}
-                type="number"
-                value={value}
-                onChange={(event) => {
-                  setValue(Number(event.target.value));
-                }}
-                className="mx-auto w-20 rounded"
-              />
-            </div>
-          );
-        })}
+      <div>
+        <h1 className="text-left text-3xl">Colors</h1>
+        <div className="mx-auto flex gap-4">
+          {colorInputs.map(({ label, value, setValue }) => {
+            return (
+              <div>
+                <div>{label}</div>
+                <input
+                  name={label}
+                  type="text"
+                  value={value}
+                  onChange={(event) => {
+                    setValue(event.target.value);
+                  }}
+                  className="mx-auto w-20 rounded px-2"
+                />
+              </div>
+            );
+          })}
+        </div>
+        <h1 className="text-3xl">Size</h1>
+        <div className="mx-auto flex gap-4">
+          {sizeInputs.map(({ label, value, setValue, min, max }) => {
+            return (
+              <div>
+                <div>{label}</div>
+                <input
+                  name={label}
+                  min={min}
+                  max={max}
+                  type="number"
+                  value={value}
+                  onChange={(event) => {
+                    setValue(Number(event.target.value));
+                  }}
+                  className="mx-auto w-20 rounded"
+                />
+              </div>
+            );
+          })}
+        </div>
+        <h1 className="text-3xl">Padding</h1>
+        <div className="mx-auto flex gap-4">
+          {paddingInputs.map(({ label, value, setValue, min, max }) => {
+            return (
+              <div>
+                <div>{label}</div>
+                <input
+                  name={label}
+                  min={min}
+                  max={max}
+                  type="number"
+                  value={value}
+                  onChange={(event) => {
+                    setValue(Number(event.target.value));
+                  }}
+                  className="mx-auto w-20 rounded"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
