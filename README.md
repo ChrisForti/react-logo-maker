@@ -1,28 +1,75 @@
-# Logo maker
+# React Logo Maker
 
-## Getting Started
+A simple, intuitive logo maker built with React, TypeScript, and Tailwind CSS. Create custom logos with text, shapes, colors, and effects, then export them as SVG or PNG files.
+
+## ✨ Features
+
+- **Real-time Preview**: See your logo changes instantly
+- **Multiple Shapes**: Support for circles, squares, and triangles
+- **Color Customization**: Logo color, background, and border colors
+- **Text Styling**: Custom text with size and style options
+- **Export Options**: Download as SVG or PNG
+- **Responsive Design**: Clean two-panel layout
+
+## 🚀 Getting Started
 
 1. Clone this repository
-2. Run `npm install` to install dependencies
-3. Run `npm run dev` to start the development server
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Technologies Used
+   ```bash
+   git clone https://github.com/ChrisForti/react-logo-maker.git
+   cd react-logo-maker
+   ```
 
-- ![react](https://img.shields.io/badge/React-19-blue)
-- ![javascript](https://img.shields.io/badge/JavaScript-ES6-yellow)
-- ![typescript](https://img.shields.io/badge/TypeScript-4.4-blue)
-- ![vite](https://img.shields.io/badge/Vite-2.6-green)
+2. Install dependencies
 
-## Contributing
+   ```bash
+   npm install
+   ```
+
+3. Start the development server
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:5174](http://localhost:5174) in your browser
+
+## 🛠️ Technologies Used
+
+- ![React](https://img.shields.io/badge/React-18-blue)
+- ![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)
+- ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-green)
+- ![Vite](https://img.shields.io/badge/Vite-6.0-purple)
+
+## 📦 Build & Deploy
+
+```bash
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+The project is configured for GitHub Pages deployment via GitHub Actions.
+
+## 🎯 Design Philosophy
+
+This project follows the principle of **radical simplicity**:
+
+- Minimal dependencies
+- Straightforward solutions over complex abstractions
+- Clean, readable code
+- Focus on essential features
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a new branch (`git checkout -b feature`)
-3. Make your changes
-4. Commit your changes (`git commit -am 'Add new feature'`)
-5. Push to the branch (`git push origin feature`)
-6. Create a new Pull Request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
