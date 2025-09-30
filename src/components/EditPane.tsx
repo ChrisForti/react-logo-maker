@@ -1,3 +1,5 @@
+import { AIImageGallery } from "./AIImageGallery";
+
 type StringInputProps = {
   label: string;
   value: string;
@@ -61,6 +63,17 @@ type EditPaneProps = {
   setShowPadding: React.Dispatch<React.SetStateAction<boolean>>;
   showSize: boolean;
   setShowSize: React.Dispatch<React.SetStateAction<boolean>>;
+  // AI Generation props
+  aiInput: StringInputProps;
+  aiGeneratedImages: string[];
+  setAiGeneratedImages: React.Dispatch<React.SetStateAction<string[]>>;
+  isGenerating: boolean;
+  setIsGenerating: React.Dispatch<React.SetStateAction<boolean>>;
+  showAiGeneration: boolean;
+  setShowAiGeneration: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedAiImage: React.Dispatch<React.SetStateAction<string>>;
+  selectedAiImage: string;
+  onOpenGalleryModal: () => void;
 };
 
 export default function EditPane({
@@ -111,7 +124,81 @@ export default function EditPane({
   setShowPadding,
   showSize,
   setShowSize,
+  aiInput,
+  aiGeneratedImages,
+  setAiGeneratedImages,
+  isGenerating,
+  setIsGenerating,
+  showAiGeneration,
+  setShowAiGeneration,
+  setSelectedAiImage,
+  selectedAiImage,
+  onOpenGalleryModal,
 }: EditPaneProps) {
+  // AI generation handlers
+  async function handleGenerateAI() {
+    setIsGenerating(true);
+    try {
+      const { aiLogoService } = await import("../services/aiLogoService");
+
+      // Create logo settings object from all inputs
+      const logoSettings = {
+        text: textInput.value,
+        color: colorInputs[0]?.value, // Logo color
+        backgroundColor: colorInputs[2]?.value, // Background color
+        style: styleInput.value,
+        shape: shapeInput.value,
+        size: sizeInputs[0]?.value, // Logo size
+      };
+
+      console.log("AI Generation with settings:", logoSettings);
+      console.log("Raw color values:", {
+        logoColor: colorInputs[0]?.value,
+        backgroundColor: colorInputs[2]?.value,
+      });
+
+      const generatedImages = await aiLogoService.generateLogos(
+        aiInput.value,
+        logoSettings,
+      );
+
+      console.log("Generated images:", generatedImages.length, "images");
+      console.log(
+        "First image preview:",
+        generatedImages[0]?.substring(0, 100) + "...",
+      );
+
+      // Accumulate images instead of replacing them
+      setAiGeneratedImages((prevImages) => [...prevImages, ...generatedImages]);
+
+      // Show success message if images were generated
+      if (generatedImages.length > 0) {
+        console.log(`✅ Generated ${generatedImages.length} AI logo options!`);
+      }
+    } catch (error) {
+      console.error("Error generating AI logo:", error);
+      alert("❌ Failed to generate AI logos. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
+  }
+
+  function handleSelectAILogo(imageUrl: string) {
+    // Set the selected AI image to be used as the logo background/base
+    setSelectedAiImage(imageUrl);
+
+    // Provide user feedback
+    console.log("Selected AI logo as base image");
+
+    // Optionally scroll to top so user can see the main preview
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function handleClearAIImages() {
+    setAiGeneratedImages([]);
+    setSelectedAiImage("");
+  }
+
   const Toggle = ({
     label,
     checked,
@@ -569,6 +656,59 @@ export default function EditPane({
                 />
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* AI Generation Section */}
+      <div className="rounded-lg bg-slate-600 p-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-white">AI Logo Generation</h3>
+          <Toggle
+            label="AI"
+            checked={showAiGeneration}
+            onChange={setShowAiGeneration}
+          />
+        </div>
+        {showAiGeneration && (
+          <div className="mt-4 space-y-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-300">
+                {aiInput.label}
+              </label>
+              <textarea
+                value={aiInput.value}
+                onChange={(event) => aiInput.setValue(event.target.value)}
+                placeholder="Describe the logo you want to generate (e.g., 'modern tech company logo with blue and green colors')"
+                rows={3}
+                className="w-full rounded-md border border-gray-600 bg-slate-800 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleGenerateAI}
+              disabled={isGenerating || !aiInput.value.trim()}
+              className="w-full rounded-md bg-purple-600 px-4 py-2 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:cursor-not-allowed disabled:bg-gray-600"
+            >
+              {isGenerating ? "Generating..." : "Generate AI Logo"}
+            </button>
+
+            {/* Gallery View Button */}
+            {aiGeneratedImages.length > 0 && (
+              <button
+                onClick={onOpenGalleryModal}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+              >
+                🖼️ View All {aiGeneratedImages.length} AI Logos in Gallery
+              </button>
+            )}
+
+            <AIImageGallery
+              images={aiGeneratedImages}
+              onSelectImage={handleSelectAILogo}
+              onClearImages={handleClearAIImages}
+              selectedImage={selectedAiImage}
+            />
           </div>
         )}
       </div>
