@@ -18,6 +18,7 @@ interface LogoData {
   logoMargin: number;
   logoPaddingX: number;
   logoPaddingY: number;
+  selectedAiImage: string;
   // Toggle states
   showBrand: boolean;
   showShape: boolean;
@@ -43,6 +44,7 @@ export function LogoPreview({ logoData }: LogoPreviewProps) {
     logoMargin,
     logoPaddingX,
     logoPaddingY,
+    selectedAiImage,
   } = logoData;
 
   // Export as SVG
@@ -163,35 +165,76 @@ export function LogoPreview({ logoData }: LogoPreviewProps) {
           preserveAspectRatio="xMidYMid meet"
           style={{ transform: `rotate(${rotation}deg)` }}
         >
-          {/* Render background if enabled */}
-          {logoData.showBackground && (
-            <rect
-              x="0"
-              y="0"
-              width="300"
-              height="300"
-              fill={backgroundColor || "#ffffff"}
-            />
-          )}
+          {/* Always render background first - either solid color or transparent */}
+          <rect
+            x="0"
+            y="0"
+            width="300"
+            height="300"
+            fill={
+              logoData.showBackground
+                ? backgroundColor || "#ffffff"
+                : "transparent"
+            }
+          />
 
-          {/* Render shape if enabled and specified */}
-          {logoData.showShape && logoData.logoShape && renderShape()}
+          {/* Render AI generated image if selected, otherwise show traditional logo elements */}
+          {selectedAiImage ? (
+            <>
+              {/* AI Image as main content */}
+              <image
+                href={selectedAiImage}
+                x="0"
+                y="0"
+                width="300"
+                height="300"
+                preserveAspectRatio="xMidYMid meet"
+                opacity={Math.max(1 - (transparency || 0) / 100, 0.1)}
+              />
 
-          {/* Render text if enabled */}
-          {logoData.showText && logoText && (
-            <text
-              x="150"
-              y={logoData.showShape && logoData.logoShape ? "200" : "150"} // Position below shape if shape exists
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill={logoColor || "#1f2937"}
-              fontSize={Math.max(logoSize || 24, 12)}
-              fontFamily={logoData.logoStyle || "Arial, sans-serif"}
-              opacity={Math.max(1 - (transparency || 0) / 100, 0.1)}
-              fontWeight="bold"
-            >
-              {logoText}
-            </text>
+              {/* Optional text overlay on AI image */}
+              {logoData.showText && logoText && (
+                <text
+                  x="150"
+                  y="250"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={logoColor || "#1f2937"}
+                  fontSize={Math.max(logoSize || 16, 12)}
+                  fontFamily={logoData.logoStyle || "Arial, sans-serif"}
+                  opacity={Math.max(1 - (transparency || 0) / 100, 0.8)}
+                  fontWeight="bold"
+                  stroke="white"
+                  strokeWidth="1"
+                >
+                  {logoText}
+                </text>
+              )}
+            </>
+          ) : (
+            <>
+              {/* Traditional logo elements when no AI image is selected */}
+
+              {/* Render shape if enabled and specified */}
+              {logoData.showShape && logoData.logoShape && renderShape()}
+
+              {/* Render text if enabled */}
+              {logoData.showText && logoText && (
+                <text
+                  x="150"
+                  y={logoData.showShape && logoData.logoShape ? "200" : "150"}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill={logoColor || "#1f2937"}
+                  fontSize={Math.max(logoSize || 24, 12)}
+                  fontFamily={logoData.logoStyle || "Arial, sans-serif"}
+                  opacity={Math.max(1 - (transparency || 0) / 100, 0.1)}
+                  fontWeight="bold"
+                >
+                  {logoText}
+                </text>
+              )}
+            </>
           )}
         </svg>
       </div>

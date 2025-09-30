@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Header } from "./components/Header";
 import EditPane from "./components/EditPane";
 import { LogoPreview } from "./components/LogoPreview";
+import { AIGalleryModal } from "./components/AIGalleryModal";
 import { useMultipleToggles } from "./hooks/useToggle";
 
 function App() {
@@ -24,9 +25,14 @@ function App() {
   const [logoMargin, setLogoMargin] = useState(0);
   const [logoPaddingX, setLogoPaddingX] = useState(0);
   const [logoPaddingY, setLogoPaddingY] = useState(0);
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiGeneratedImages, setAiGeneratedImages] = useState<string[]>([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedAiImage, setSelectedAiImage] = useState("");
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
 
   // Toggle states using custom hook
-  const { toggles, toggle, setToggle } = useMultipleToggles({
+  const { toggles, setToggle } = useMultipleToggles({
     brand: true,
     shape: true,
     text: true,
@@ -43,6 +49,7 @@ function App() {
     margin: false,
     padding: false,
     size: true,
+    aiGeneration: true,
   });
 
   // Define the arrays
@@ -128,29 +135,45 @@ function App() {
     },
   ];
 
+  const aiInput = {
+    label: "AI Prompt",
+    value: aiPrompt,
+    setValue: setAiPrompt,
+  };
+
   function handleSubmit() {
-    const data = {
-      brand,
-      logoSize,
-      logoColor,
-      logoShape,
-      logoText,
-      logoStyle,
-      backgroundColor,
-      borderColor,
-      borderSize,
-      logoPosition,
-      rotation,
-      transparency,
-      effects,
-      imageUpload,
-      imageFilter,
-      animation,
-      logoMargin,
-      logoPaddingX,
-      logoPaddingY,
-    };
-    console.log("Logo Data: ", data);
+    try {
+      // Trigger the logo export from LogoPreview component
+      const logoPreviewElement = document.querySelector("#logo-svg");
+      if (logoPreviewElement) {
+        // Trigger SVG download
+        const svgElement = logoPreviewElement.cloneNode(true) as SVGElement;
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const svgBlob = new Blob([svgData], {
+          type: "image/svg+xml;charset=utf-8",
+        });
+        const svgUrl = URL.createObjectURL(svgBlob);
+
+        const downloadLink = document.createElement("a");
+        downloadLink.href = svgUrl;
+        downloadLink.download = `${brand.replace(/\s+/g, "-").toLowerCase()}-logo.svg`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(svgUrl);
+
+        // Show success message
+        console.log("✅ Logo downloaded successfully as SVG!");
+      } else {
+        console.error("❌ Logo preview element not found");
+        alert(
+          "Error: Could not find logo preview. Please make sure the logo is visible.",
+        );
+      }
+    } catch (error) {
+      console.error("❌ Error downloading logo:", error);
+      alert("Error downloading logo. Please try again.");
+    }
   }
 
   const logoData = {
@@ -173,6 +196,7 @@ function App() {
     logoMargin,
     logoPaddingX,
     logoPaddingY,
+    selectedAiImage,
     // Toggle states using hook
     showBrand: toggles.brand,
     showShape: toggles.shape,
@@ -246,21 +270,58 @@ function App() {
             setShowPadding={(value) => setToggle("padding", value)}
             showSize={toggles.size}
             setShowSize={(value) => setToggle("size", value)}
+            aiInput={aiInput}
+            aiGeneratedImages={aiGeneratedImages}
+            setAiGeneratedImages={setAiGeneratedImages}
+            isGenerating={isGenerating}
+            setIsGenerating={setIsGenerating}
+            showAiGeneration={toggles.aiGeneration}
+            setShowAiGeneration={(value) => setToggle("aiGeneration", value)}
+            setSelectedAiImage={setSelectedAiImage}
+            selectedAiImage={selectedAiImage}
+            onOpenGalleryModal={() => setIsGalleryModalOpen(true)}
           />
           <button
             type="submit"
-            className="mt-6 w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+            className="mt-6 w-full rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
             onClick={handleSubmit}
           >
-            Generate Logo
+            ⚡ Quick Download SVG
           </button>
         </div>
 
         {/* Preview Panel */}
-        <div className="flex w-full items-start justify-center lg:flex-1">
+        <div className="flex w-full flex-col items-center justify-start lg:flex-1">
+          {selectedAiImage && (
+            <div className="mb-4 rounded-lg border border-purple-500 bg-purple-900 bg-opacity-30 px-4 py-2">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-purple-500"></div>
+                <span className="text-sm font-medium text-purple-200">
+                  ✨ AI Base Logo Active - Customize with tools on the left
+                </span>
+              </div>
+            </div>
+          )}
           <LogoPreview logoData={logoData} />
         </div>
       </div>
+
+      {/* AI Gallery Modal */}
+      <AIGalleryModal
+        isOpen={isGalleryModalOpen}
+        onClose={() => setIsGalleryModalOpen(false)}
+        images={aiGeneratedImages}
+        onSelectImage={(imageUrl) => {
+          setSelectedAiImage(imageUrl);
+          setIsGalleryModalOpen(false); // Close modal after selection
+        }}
+        onClearImages={() => {
+          setAiGeneratedImages([]);
+          setSelectedAiImage("");
+          setIsGalleryModalOpen(false);
+        }}
+        selectedImage={selectedAiImage}
+      />
     </div>
   );
 }
