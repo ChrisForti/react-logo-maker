@@ -223,6 +223,72 @@ export default function EditPane({
     <div className="flex flex-col gap-4 rounded-lg bg-slate-700 p-6 pl-2 text-left">
       <h1 className="mb-4 text-2xl font-bold text-white">Logo Settings</h1>
 
+      {/* AI Generation Section - Start Here! */}
+      <div className="rounded-lg bg-slate-600 p-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-white">
+            ✨ AI Logo Generation
+            <span className="ml-2 rounded-full bg-blue-600 px-2 py-1 text-xs text-white">
+              Start Here
+            </span>
+          </h3>
+          <Toggle
+            label="AI"
+            checked={showAiGeneration}
+            onChange={setShowAiGeneration}
+          />
+        </div>
+        {showAiGeneration && (
+          <div className="mt-4 space-y-4">
+            {/* Helpful instruction note */}
+            <div className="rounded-md border border-blue-500 bg-blue-900 bg-opacity-40 p-3">
+              <p className="text-sm text-blue-200">
+                💡 <strong>New to AI logos?</strong> Generate some options here
+                first, then use the other tools below to customize your
+                favorite!
+              </p>
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-300">
+                {aiInput.label}
+              </label>
+              <textarea
+                value={aiInput.value}
+                onChange={(event) => aiInput.setValue(event.target.value)}
+                placeholder="Describe the logo you want to generate (e.g., 'modern tech company logo with blue and green colors')"
+                rows={3}
+                className="w-full rounded-md border border-gray-600 bg-slate-800 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleGenerateAI}
+              disabled={isGenerating || !aiInput.value.trim()}
+              className="w-full rounded-md bg-purple-600 px-4 py-2 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:cursor-not-allowed disabled:bg-gray-600"
+            >
+              {isGenerating ? "Generating..." : "Generate AI Logo"}
+            </button>
+
+            {/* Gallery View Button */}
+            {aiGeneratedImages.length > 0 && (
+              <button
+                onClick={onOpenGalleryModal}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+              >
+                🖼️ View All {aiGeneratedImages.length} AI Logos in Gallery
+              </button>
+            )}
+
+            <AIImageGallery
+              images={aiGeneratedImages}
+              onSelectImage={handleSelectAILogo}
+              onClearImages={handleClearAIImages}
+              selectedImage={selectedAiImage}
+            />
+          </div>
+        )}
+      </div>
+
       {/* Brand Section */}
       <div className="rounded-lg bg-slate-600 p-4">
         <div className="mb-3 flex items-center justify-between">
@@ -656,59 +722,6 @@ export default function EditPane({
                 />
               </div>
             ))}
-          </div>
-        )}
-      </div>
-
-      {/* AI Generation Section */}
-      <div className="rounded-lg bg-slate-600 p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium text-white">AI Logo Generation</h3>
-          <Toggle
-            label="AI"
-            checked={showAiGeneration}
-            onChange={setShowAiGeneration}
-          />
-        </div>
-        {showAiGeneration && (
-          <div className="mt-4 space-y-4">
-            <div>
-              <label className="mb-1 block text-sm font-medium text-gray-300">
-                {aiInput.label}
-              </label>
-              <textarea
-                value={aiInput.value}
-                onChange={(event) => aiInput.setValue(event.target.value)}
-                placeholder="Describe the logo you want to generate (e.g., 'modern tech company logo with blue and green colors')"
-                rows={3}
-                className="w-full rounded-md border border-gray-600 bg-slate-800 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={handleGenerateAI}
-              disabled={isGenerating || !aiInput.value.trim()}
-              className="w-full rounded-md bg-purple-600 px-4 py-2 text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:cursor-not-allowed disabled:bg-gray-600"
-            >
-              {isGenerating ? "Generating..." : "Generate AI Logo"}
-            </button>
-
-            {/* Gallery View Button */}
-            {aiGeneratedImages.length > 0 && (
-              <button
-                onClick={onOpenGalleryModal}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700"
-              >
-                🖼️ View All {aiGeneratedImages.length} AI Logos in Gallery
-              </button>
-            )}
-
-            <AIImageGallery
-              images={aiGeneratedImages}
-              onSelectImage={handleSelectAILogo}
-              onClearImages={handleClearAIImages}
-              selectedImage={selectedAiImage}
-            />
           </div>
         )}
       </div>
