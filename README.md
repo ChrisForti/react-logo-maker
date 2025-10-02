@@ -1,15 +1,59 @@
 # React Logo Maker
 
-A simple, intuitive logo maker built with React, TypeScript, and Tailwind CSS. Create custom logos with text, shapes, colors, and effects, then export them as SVG or PNG files.
+A simple, intuitive logo m4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+## 🤖 AI Logo Generation Setup (Optional)
+
+The app works great with professional mock designs, but you can enable real AI generation:
+
+1. **Get an OpenAI API key**:
+
+   - Sign up at [platform.openai.com](https://platform.openai.com/signup)
+   - Go to [API Keys](https://platform.openai.com/api-keys) and create a new key
+   - Add billing information (DALL-E costs ~$0.04-0.08 per image)
+
+2. **Configure your environment**:
+
+   ```bash
+   # Copy the example file
+   cp .env.example .env.local
+
+   # Edit .env.local and add your API key
+   VITE_OPENAI_API_KEY=sk-proj-your-key-here
+   ```
+
+3. **Restart the development server**:
+   ```bash
+   npm run dev
+   ```
+
+**Cost Estimate**: Generating 4 logo variations costs approximately $0.16-0.32
+
+## 🛠️ Technologies Usedr built with React, TypeScript, and Tailwind CSS. Create custom logos with text, shapes, colors, and effects, then export them as SVG or PNG files.
 
 ## ✨ Features
+
+### 🎨 AI Logo Generation
+
+- **OpenAI DALL-E 3 Integration**: Generate professional logos with AI
+- **Professional Mock Designs**: 4 high-quality fallback designs when no API key is provided
+- **Smart Prompt Enhancement**: Uses your color and text settings for better AI results
+- **Full-Screen Gallery**: Large preview modal for viewing and selecting AI logos
+- **Mobile Optimized**: Touch-friendly gallery with responsive design
+
+### 🛠️ Traditional Logo Tools
 
 - **Real-time Preview**: See your logo changes instantly
 - **Multiple Shapes**: Support for circles, squares, and triangles
 - **Color Customization**: Logo color, background, and border colors
 - **Text Styling**: Custom text with size and style options
-- **Export Options**: Download as SVG or PNG
-- **Responsive Design**: Clean two-panel layout
+- **Hybrid Mode**: Combine AI-generated bases with traditional customization
+
+### 📤 Export & Sharing
+
+- **Multiple Formats**: Download as SVG or PNG
+- **Individual Downloads**: Save specific AI variations
+- **Responsive Design**: Clean two-panel layout that works on all devices
 
 ## 🚀 Getting Started
 

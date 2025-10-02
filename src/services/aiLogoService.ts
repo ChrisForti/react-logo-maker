@@ -57,77 +57,164 @@ export class AILogoService {
   ): Promise<string[]> {
     // If no OpenAI client, return mock data
     if (!this.openai) {
-      console.warn("OpenAI API key not found, using mock data");
+      console.warn(
+        "🎨 OpenAI API key not configured - using professional mock designs",
+      );
       return this.getMockLogos(prompt, logoSettings);
     }
+
     try {
+      console.log("🤖 Generating AI logos with OpenAI DALL-E 3...");
       const enhancedPrompt = this.enhancePromptForLogo(prompt, logoSettings);
 
-      const response = await this.openai.images.generate({
-        model: "dall-e-3",
-        prompt: enhancedPrompt,
-        n: 1, // DALL-E 3 only supports n=1
-        size: "1024x1024",
-        style: "vivid", // or "natural"
-        response_format: "url",
-      });
+      console.log("📝 Enhanced prompt:", enhancedPrompt);
 
-      // Generate multiple variations by calling the API multiple times
-      const promises = Array.from({ length: 3 }, () =>
-        this.openai!.images.generate({
-          model: "dall-e-3",
-          prompt: enhancedPrompt,
-          n: 1,
-          size: "1024x1024",
-          style: Math.random() > 0.5 ? "vivid" : "natural",
-          response_format: "url",
-        }),
+      // Generate multiple variations with different styles
+      const styles: Array<"vivid" | "natural"> = ["vivid", "natural"];
+      const promises = Array.from({ length: 4 }, (_, index) =>
+        this.generateSingleLogo(enhancedPrompt, styles[index % 2]),
       );
 
-      const results = await Promise.all([response, ...promises]);
+      const results = await Promise.allSettled(promises);
 
-      return results
-        .map((result) => result.data?.[0]?.url)
-        .filter((url): url is string => url !== undefined);
+      const successfulResults = results
+        .filter(
+          (result): result is PromiseFulfilledResult<string> =>
+            result.status === "fulfilled",
+        )
+        .map((result) => result.value);
+
+      const failedCount = results.filter(
+        (result) => result.status === "rejected",
+      ).length;
+
+      if (failedCount > 0) {
+        console.warn(
+          `⚠️ ${failedCount} logo generations failed, got ${successfulResults.length} successful results`,
+        );
+      }
+
+      // If we got some results, return them. Otherwise fallback to mock.
+      if (successfulResults.length > 0) {
+        console.log(
+          `✅ Generated ${successfulResults.length} AI logos successfully!`,
+        );
+        return successfulResults;
+      } else {
+        throw new Error("All logo generation attempts failed");
+      }
     } catch (error) {
-      console.error("Error generating AI logos:", error);
-      // Fallback to mock data on error
-      return this.getMockLogos(prompt, logoSettings);
+      return this.handleGenerationError(error, prompt, logoSettings);
     }
+  }
+
+  private async generateSingleLogo(
+    prompt: string,
+    style: "vivid" | "natural",
+  ): Promise<string> {
+    if (!this.openai) {
+      throw new Error("OpenAI client not initialized");
+    }
+
+    const response = await this.openai.images.generate({
+      model: "dall-e-3",
+      prompt: prompt,
+      n: 1, // DALL-E 3 only supports n=1
+      size: "1024x1024",
+      style: style,
+      response_format: "url",
+      quality: "standard", // or "hd" for higher quality (more expensive)
+    });
+
+    const imageUrl = response.data?.[0]?.url;
+    if (!imageUrl) {
+      throw new Error("No image URL returned from OpenAI");
+    }
+
+    return imageUrl;
+  }
+
+  private async handleGenerationError(
+    error: any,
+    prompt: string,
+    logoSettings?: LogoSettings,
+  ): Promise<string[]> {
+    console.error("❌ OpenAI logo generation failed:", error);
+
+    // Handle specific OpenAI error types
+    if (error?.error?.type) {
+      const errorType = error.error.type;
+      const errorMessage = error.error.message || "Unknown error";
+
+      switch (errorType) {
+        case "insufficient_quota":
+          console.error("💳 OpenAI quota exceeded - check your billing");
+          break;
+        case "rate_limit_exceeded":
+          console.error("🚦 Rate limit exceeded - please try again later");
+          break;
+        case "invalid_request_error":
+          console.error("🚫 Invalid request:", errorMessage);
+          break;
+        case "authentication_error":
+          console.error("🔐 Authentication error - check your API key");
+          break;
+        default:
+          console.error(`🔥 OpenAI error (${errorType}):`, errorMessage);
+      }
+    }
+
+    // Always fallback to mock data
+    console.log("🎨 Falling back to professional mock designs");
+    return this.getMockLogos(prompt, logoSettings);
   }
 
   private enhancePromptForLogo(
     userPrompt: string,
     logoSettings?: LogoSettings,
   ): string {
+    // Build specific instructions from user settings
     const textInstruction = logoSettings?.text
-      ? `The logo should incorporate the text "${logoSettings.text}" as the main brand name.`
+      ? `Include the text "${logoSettings.text}" prominently in the logo design.`
       : "";
 
     const colorInstruction = logoSettings?.color
-      ? `Use ${logoSettings.color} (hex: #${convertColorToHex(logoSettings.color)}) as the primary color.`
+      ? `Use ${logoSettings.color} (hex: #${convertColorToHex(logoSettings.color)}) as the primary brand color.`
       : "";
 
     const styleInstruction = logoSettings?.style
-      ? `Apply ${logoSettings.style} font family/style.`
+      ? `Apply ${logoSettings.style} typography style.`
       : "";
 
     const shapeInstruction = logoSettings?.shape
-      ? `Incorporate ${logoSettings.shape} geometric elements.`
+      ? `Incorporate ${logoSettings.shape} geometric shapes or elements.`
       : "";
 
-    const bgInstruction = logoSettings?.backgroundColor
-      ? `Use ${logoSettings.backgroundColor} (hex: #${convertColorToHex(logoSettings.backgroundColor)}) as the background color.`
-      : "";
+    const bgInstruction =
+      logoSettings?.backgroundColor &&
+      logoSettings.backgroundColor !== "#ffffff"
+        ? `Place on a ${logoSettings.backgroundColor} (hex: #${convertColorToHex(logoSettings.backgroundColor)}) background.`
+        : "Place on a clean white background.";
 
-    return `Create a professional business logo ${userPrompt}. ${textInstruction} ${colorInstruction} ${styleInstruction} ${shapeInstruction} ${bgInstruction} The logo should be:
-- Clean and minimalist design
-- Suitable for use on business cards, websites, and merchandise  
-- Vector-style with clean lines
-- Professional and modern appearance
-- High contrast and readable
-- Appropriate for corporate branding
-- Simple enough to work in both large and small sizes`;
+    // Enhanced prompt for better DALL-E 3 results
+    return `Create a professional business logo for "${userPrompt}". ${textInstruction} ${colorInstruction} ${styleInstruction} ${shapeInstruction} ${bgInstruction}
+
+Design requirements:
+- Modern, clean, and minimalist aesthetic
+- Vector-style with crisp edges and clean geometry
+- Professional appearance suitable for corporate branding
+- High contrast and excellent readability
+- Scalable design that works from business cards to billboards
+- Memorable and distinctive visual identity
+- Appropriate negative space usage
+- Balanced composition and visual hierarchy
+
+Style guidelines:
+- Avoid overly complex details or photorealistic elements
+- Use flat design principles with subtle depth if needed
+- Ensure the logo works in both color and monochrome versions
+- Create a timeless design that won't quickly become dated
+- Focus on symbolic representation rather than literal imagery`;
   }
 
   private getMockLogos(
@@ -255,6 +342,44 @@ export class AILogoService {
 
   isConfigured(): boolean {
     return this.openai !== null;
+  }
+
+  getStatus(): { configured: boolean; mode: string; message: string } {
+    if (this.openai) {
+      return {
+        configured: true,
+        mode: "AI",
+        message: "✨ AI generation enabled with OpenAI DALL-E 3",
+      };
+    } else {
+      return {
+        configured: false,
+        mode: "Mock",
+        message:
+          "🎨 Using professional mock designs (add API key for AI generation)",
+      };
+    }
+  }
+
+  async testConnection(): Promise<boolean> {
+    if (!this.openai) {
+      return false;
+    }
+
+    try {
+      // Test with a simple, low-cost generation
+      await this.openai.images.generate({
+        model: "dall-e-3",
+        prompt: "simple test image",
+        n: 1,
+        size: "1024x1024",
+        quality: "standard",
+      });
+      return true;
+    } catch (error) {
+      console.error("OpenAI connection test failed:", error);
+      return false;
+    }
   }
 }
 

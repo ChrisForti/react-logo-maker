@@ -1,3 +1,4 @@
+import React from "react";
 import { AIImageGallery } from "./AIImageGallery";
 
 type StringInputProps = {
@@ -135,6 +136,33 @@ export default function EditPane({
   selectedAiImage,
   onOpenGalleryModal,
 }: EditPaneProps) {
+  // AI service status
+  const [aiStatus, setAiStatus] = React.useState({
+    configured: false,
+    mode: "Mock",
+    message: "Loading...",
+  });
+
+  // Check AI service status on component mount
+  React.useEffect(() => {
+    async function checkAIStatus() {
+      try {
+        const { aiLogoService } = await import("../services/aiLogoService");
+        const status = aiLogoService.getStatus();
+        setAiStatus(status);
+      } catch (error) {
+        console.error("Error checking AI service status:", error);
+        setAiStatus({
+          configured: false,
+          mode: "Error",
+          message: "❌ Error loading AI service",
+        });
+      }
+    }
+
+    checkAIStatus();
+  }, []);
+
   // AI generation handlers
   async function handleGenerateAI() {
     setIsGenerating(true);
@@ -240,6 +268,30 @@ export default function EditPane({
         </div>
         {showAiGeneration && (
           <div className="mt-4 space-y-4">
+            {/* AI Status Indicator */}
+            <div
+              className={`rounded-md border p-3 ${
+                aiStatus.configured
+                  ? "border-green-500 bg-green-900 bg-opacity-30"
+                  : "border-yellow-500 bg-yellow-900 bg-opacity-30"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  className={`h-2 w-2 rounded-full ${
+                    aiStatus.configured ? "bg-green-400" : "bg-yellow-400"
+                  }`}
+                ></div>
+                <p
+                  className={`text-sm ${
+                    aiStatus.configured ? "text-green-200" : "text-yellow-200"
+                  }`}
+                >
+                  <strong>AI Status:</strong> {aiStatus.message}
+                </p>
+              </div>
+            </div>
+
             {/* Helpful instruction note */}
             <div className="rounded-md border border-blue-500 bg-blue-900 bg-opacity-40 p-3">
               <p className="text-sm text-blue-200">
