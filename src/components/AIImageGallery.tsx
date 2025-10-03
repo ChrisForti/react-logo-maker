@@ -13,7 +13,10 @@ export function AIImageGallery({
 }: AIImageGalleryProps) {
   console.log("🖼️ AIImageGallery received images:", images.length);
   if (images.length > 0) {
-    console.log("📋 Gallery image URLs:", images.map((url, i) => `${i+1}: ${url.substring(0, 60)}...`));
+    console.log(
+      "📋 Gallery image URLs:",
+      images.map((url, i) => `${i + 1}: ${url.substring(0, 60)}...`),
+    );
   }
 
   if (images.length === 0) {

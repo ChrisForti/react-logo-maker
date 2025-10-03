@@ -43,18 +43,27 @@ export class AILogoService {
   constructor() {
     // Only initialize OpenAI if API key is available
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    console.log("🔑 API Key check:", apiKey ? `Found key: ${apiKey.substring(0, 20)}...` : "No API key found");
+    console.log(
+      "🔑 API Key check:",
+      apiKey ? `Found key: ${apiKey.substring(0, 20)}...` : "No API key found",
+    );
     console.log("🔢 API Key length:", apiKey ? apiKey.length : 0);
-    console.log("🔍 API Key starts with sk-:", apiKey ? apiKey.startsWith('sk-') : false);
-    
-    if (apiKey && apiKey.length > 20) { // Ensure it's a real key, not just a placeholder
+    console.log(
+      "🔍 API Key starts with sk-:",
+      apiKey ? apiKey.startsWith("sk-") : false,
+    );
+
+    if (apiKey && apiKey.length > 20) {
+      // Ensure it's a real key, not just a placeholder
       console.log("✅ Initializing OpenAI client with real API key");
       this.openai = new OpenAI({
         apiKey: apiKey,
         dangerouslyAllowBrowser: true, // Note: In production, API calls should go through your backend
       });
     } else {
-      console.log("❌ OpenAI client not initialized - API key missing or invalid");
+      console.log(
+        "❌ OpenAI client not initialized - API key missing or invalid",
+      );
     }
   }
 
@@ -65,7 +74,7 @@ export class AILogoService {
     console.log("🎯 generateLogos called with prompt:", prompt);
     console.log("🤖 OpenAI client exists:", !!this.openai);
     console.log("🔧 isConfigured():", this.isConfigured());
-    
+
     // If no OpenAI client, return mock data
     if (!this.openai) {
       console.warn(
@@ -77,9 +86,9 @@ export class AILogoService {
     try {
       console.log("🤖 Generating AI logos with OpenAI DALL-E 3...");
       const enhancedPrompt = this.enhancePromptForLogo(prompt, logoSettings);
-      
+
       console.log("📝 Enhanced prompt:", enhancedPrompt);
-      console.log("🔄 Starting API calls to OpenAI...");      // Generate multiple variations with different styles
+      console.log("🔄 Starting API calls to OpenAI..."); // Generate multiple variations with different styles
       const styles: Array<"vivid" | "natural"> = ["vivid", "natural"];
       const promises = Array.from({ length: 4 }, (_, index) =>
         this.generateSingleLogo(enhancedPrompt, styles[index % 2]),
@@ -113,10 +122,15 @@ export class AILogoService {
         console.log(
           `✅ Generated ${successfulResults.length} AI logos successfully!`,
         );
-        console.log("🖼️ First result preview:", successfulResults[0].substring(0, 50) + "...");
+        console.log(
+          "🖼️ First result preview:",
+          successfulResults[0].substring(0, 50) + "...",
+        );
         return successfulResults;
       } else {
-        console.log("❌ All AI generation attempts failed, falling back to mocks");
+        console.log(
+          "❌ All AI generation attempts failed, falling back to mocks",
+        );
         throw new Error("All logo generation attempts failed");
       }
     } catch (error) {
@@ -170,9 +184,13 @@ export class AILogoService {
 
     // Check for specific error types and provide helpful messages
     if (error.message?.includes("Billing hard limit has been reached")) {
-      console.warn("💳 Billing limit reached. Please check your OpenAI billing settings at https://platform.openai.com/settings/organization/billing");
+      console.warn(
+        "💳 Billing limit reached. Please check your OpenAI billing settings at https://platform.openai.com/settings/organization/billing",
+      );
     } else if (error.message?.includes("insufficient_quota")) {
-      console.warn("� Insufficient quota. Please add credits to your OpenAI account.");
+      console.warn(
+        "� Insufficient quota. Please add credits to your OpenAI account.",
+      );
     } else if (error.message?.includes("rate_limit")) {
       console.warn("⏱️ Rate limit exceeded. Please try again in a moment.");
     } else if (error.message?.includes("401")) {

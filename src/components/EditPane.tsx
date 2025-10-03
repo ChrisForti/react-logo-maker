@@ -197,8 +197,14 @@ export default function EditPane({
       );
 
       // Replace existing images with new ones (don't accumulate)
-      console.log("🔄 Setting new images in state. Count:", generatedImages.length);
-      console.log("📋 New image URLs:", generatedImages.map((url, i) => `${i+1}: ${url.substring(0, 60)}...`));
+      console.log(
+        "🔄 Setting new images in state. Count:",
+        generatedImages.length,
+      );
+      console.log(
+        "📋 New image URLs:",
+        generatedImages.map((url, i) => `${i + 1}: ${url.substring(0, 60)}...`),
+      );
       setAiGeneratedImages(generatedImages);
 
       // Show success message if images were generated
@@ -208,15 +214,22 @@ export default function EditPane({
       }
     } catch (error) {
       console.error("Error generating AI logo:", error);
-      
+
       // Check for specific OpenAI billing errors
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       if (errorMessage.includes("Billing hard limit has been reached")) {
-        alert("💳 OpenAI billing limit reached!\n\nPlease visit https://platform.openai.com/settings/organization/billing to increase your limit.\n\nFor now, you'll see mock logos as examples.");
+        alert(
+          "💳 OpenAI billing limit reached!\n\nPlease visit https://platform.openai.com/settings/organization/billing to increase your limit.\n\nFor now, you'll see mock logos as examples.",
+        );
       } else if (errorMessage.includes("insufficient_quota")) {
-        alert("💰 OpenAI quota exhausted!\n\nPlease add credits to your OpenAI account.\n\nFor now, you'll see mock logos as examples.");
+        alert(
+          "💰 OpenAI quota exhausted!\n\nPlease add credits to your OpenAI account.\n\nFor now, you'll see mock logos as examples.",
+        );
       } else {
-        alert("❌ Failed to generate AI logos. Please try again.\n\nFor now, you'll see mock logos as examples.");
+        alert(
+          "❌ Failed to generate AI logos. Please try again.\n\nFor now, you'll see mock logos as examples.",
+        );
       }
     } finally {
       setIsGenerating(false);
