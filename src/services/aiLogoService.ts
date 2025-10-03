@@ -12,8 +12,9 @@ export class AILogoService {
 
   constructor() {
     // Use environment variable for API URL, with fallback for development
-    this.apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-    
+    this.apiBaseUrl =
+      import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+
     console.log("🔗 API Base URL:", this.apiBaseUrl);
     console.log("🌍 Environment:", import.meta.env.MODE);
   }
@@ -32,39 +33,47 @@ export class AILogoService {
 
     try {
       console.log("🤖 Generating AI logos via secure backend API...");
-      
+
       const response = await fetch(`${this.apiBaseUrl}/api/generate-logo`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt: prompt,
-          logoSettings: logoSettings
-        })
+          logoSettings: logoSettings,
+        }),
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+        throw new Error(
+          errorData.error || `HTTP ${response.status}: ${response.statusText}`,
+        );
       }
 
       const data = await response.json();
-      
+
       if (data.success && data.images && data.images.length > 0) {
-        console.log(`✅ Generated ${data.images.length} AI logos successfully via backend!`);
-        console.log("🖼️ First result preview:", data.images[0].substring(0, 50) + "...");
-        
+        console.log(
+          `✅ Generated ${data.images.length} AI logos successfully via backend!`,
+        );
+        console.log(
+          "🖼️ First result preview:",
+          data.images[0].substring(0, 50) + "...",
+        );
+
         if (data.failedCount > 0) {
-          console.warn(`⚠️ ${data.failedCount} logo generations failed on backend`);
+          console.warn(
+            `⚠️ ${data.failedCount} logo generations failed on backend`,
+          );
         }
-        
+
         return data.images;
       } else {
         console.log("❌ Backend returned no images, falling back to mocks");
         throw new Error("No images returned from backend");
       }
-      
     } catch (error) {
       console.error("🚨 BACKEND API ERROR:", error);
       return this.handleGenerationError(error, prompt, logoSettings);
@@ -80,13 +89,22 @@ export class AILogoService {
 
     // Check for specific error types and provide helpful messages
     const errorMessage = error.message || String(error);
-    
+
     if (errorMessage.includes("Too many requests")) {
-      console.warn("⏱️ Rate limit exceeded on backend. Please try again in a moment.");
+      console.warn(
+        "⏱️ Rate limit exceeded on backend. Please try again in a moment.",
+      );
     } else if (errorMessage.includes("billing")) {
-      console.warn("💳 Billing issue detected on backend. Please contact administrator.");
-    } else if (errorMessage.includes("Failed to fetch") || errorMessage.includes("NetworkError")) {
-      console.warn("🌐 Network error - backend may be unavailable. Using mock logos.");
+      console.warn(
+        "💳 Billing issue detected on backend. Please contact administrator.",
+      );
+    } else if (
+      errorMessage.includes("Failed to fetch") ||
+      errorMessage.includes("NetworkError")
+    ) {
+      console.warn(
+        "🌐 Network error - backend may be unavailable. Using mock logos.",
+      );
     } else if (errorMessage.includes("401") || errorMessage.includes("403")) {
       console.warn("🔑 Authentication failed on backend.");
     } else {
@@ -97,16 +115,13 @@ export class AILogoService {
     return this.getMockLogos(prompt, logoSettings);
   }
 
-  private getMockLogos(
-    prompt: string,
-    logoSettings?: LogoSettings,
-  ): string[] {
+  private getMockLogos(prompt: string, logoSettings?: LogoSettings): string[] {
     console.log("🎭 Generating mock logos as fallback");
 
     // Enhanced mock logic that uses the actual settings if provided
     const settings = {
       color: logoSettings?.logoColor || "#3b82f6",
-      backgroundColor: logoSettings?.backgroundColor || "#ffffff", 
+      backgroundColor: logoSettings?.backgroundColor || "#ffffff",
       typography: logoSettings?.typography || "Arial",
       shape: logoSettings?.shape || "circle",
     };
@@ -117,19 +132,16 @@ export class AILogoService {
       const primaryColor = settings.color;
       const bgColor = settings.backgroundColor;
       const shapeType = settings.shape;
-      
+
       // Create different variations
       const isCircle = shapeType === "circle";
       const variations = ["solid", "outline", "gradient", "minimal"];
       const variation = variations[index % variations.length];
-      
+
       // Use provided logo settings, or extract from prompt as fallback
-      const logoText = prompt
-        .split(" ")
-        .slice(0, 2)
-        .join(" ")
-        .toUpperCase()
-        .substring(0, 8) || "LOGO";
+      const logoText =
+        prompt.split(" ").slice(0, 2).join(" ").toUpperCase().substring(0, 8) ||
+        "LOGO";
 
       let svgContent;
 

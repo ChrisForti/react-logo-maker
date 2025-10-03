@@ -16,18 +16,21 @@ This backend provides secure API endpoints for generating AI logos using OpenAI'
 ### 🛠️ Local Development
 
 1. **Install dependencies:**
+
    ```bash
    cd backend
    npm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp .env .env.local
    # Edit .env.local with your actual OpenAI API key
    ```
 
 3. **Start development server:**
+
    ```bash
    npm run dev
    ```
@@ -42,15 +45,18 @@ This backend provides secure API endpoints for generating AI logos using OpenAI'
 ### 🚂 Railway Deployment
 
 1. **Create Railway Project:**
+
    - Go to [Railway.app](https://railway.app)
    - Connect your GitHub repository
    - Select the backend directory
 
 2. **Set Environment Variables:**
+
    - `OPENAI_API_KEY`: Your actual OpenAI API key
    - `NODE_ENV`: production
 
 3. **Deploy:**
+
    - Railway automatically detects Express apps
    - Deployment starts immediately after environment variables are set
 
@@ -61,11 +67,13 @@ This backend provides secure API endpoints for generating AI logos using OpenAI'
 ### 📋 API Endpoints
 
 #### Health Check
+
 ```
 GET /api/health
 ```
 
 #### Generate Logo
+
 ```
 POST /api/generate-logo
 Content-Type: application/json
@@ -82,6 +90,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -123,6 +132,7 @@ Content-Type: application/json
 ### 🔍 Monitoring
 
 Check logs for:
+
 - Request counts and patterns
 - Error rates and types
 - OpenAI API usage

@@ -1,9 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const OpenAI = require('openai');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const OpenAI = require("openai");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -18,54 +18,59 @@ app.use(helmet());
 
 // CORS configuration - update with your frontend domain
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://chrisforti.github.io', 'https://your-custom-domain.com'] // Add your actual domains
-    : ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173'],
+  origin:
+    process.env.NODE_ENV === "production"
+      ? ["https://chrisforti.github.io", "https://your-custom-domain.com"] // Add your actual domains
+      : [
+          "http://localhost:5173",
+          "http://localhost:5174",
+          "http://127.0.0.1:5173",
+        ],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
 
 // Rate limiting - 10 requests per minute per IP
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 10, // Limit each IP to 10 requests per windowMs
   message: {
-    error: 'Too many requests, please try again later.',
-    retryAfter: 60
+    error: "Too many requests, please try again later.",
+    retryAfter: 60,
   },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-app.use('/api/', limiter);
+app.use("/api/", limiter);
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "OK",
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || "development",
   });
 });
 
 // Logo generation endpoint
-app.post('/api/generate-logo', async (req, res) => {
+app.post("/api/generate-logo", async (req, res) => {
   try {
     const { prompt, logoSettings } = req.body;
-    
+
     // Validate request
-    if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
-      return res.status(400).json({ 
-        error: 'Prompt is required and must be a non-empty string' 
+    if (!prompt || typeof prompt !== "string" || prompt.trim().length === 0) {
+      return res.status(400).json({
+        error: "Prompt is required and must be a non-empty string",
       });
     }
 
     if (prompt.length > 1000) {
-      return res.status(400).json({ 
-        error: 'Prompt too long. Maximum 1000 characters.' 
+      return res.status(400).json({
+        error: "Prompt too long. Maximum 1000 characters.",
       });
     }
 
@@ -73,27 +78,31 @@ app.post('/api/generate-logo', async (req, res) => {
 
     // Enhanced prompt for professional logo generation
     const enhancedPrompt = createLogoPrompt(prompt, logoSettings);
-    
+
     // Generate 4 logo variations with different styles
-    const styles = ['vivid', 'natural'];
+    const styles = ["vivid", "natural"];
     const promises = Array.from({ length: 4 }, (_, index) =>
-      generateSingleLogo(enhancedPrompt, styles[index % 2])
+      generateSingleLogo(enhancedPrompt, styles[index % 2]),
     );
 
     const results = await Promise.allSettled(promises);
-    
-    const successfulResults = results
-      .filter(result => result.status === 'fulfilled')
-      .map(result => result.value);
 
-    const failedCount = results.filter(result => result.status === 'rejected').length;
+    const successfulResults = results
+      .filter((result) => result.status === "fulfilled")
+      .map((result) => result.value);
+
+    const failedCount = results.filter(
+      (result) => result.status === "rejected",
+    ).length;
 
     if (failedCount > 0) {
-      console.warn(`⚠️ ${failedCount} logo generations failed, got ${successfulResults.length} successful results`);
+      console.warn(
+        `⚠️ ${failedCount} logo generations failed, got ${successfulResults.length} successful results`,
+      );
     }
 
     if (successfulResults.length === 0) {
-      throw new Error('All logo generation attempts failed');
+      throw new Error("All logo generation attempts failed");
     }
 
     console.log(`✅ Generated ${successfulResults.length} logos successfully`);
@@ -102,37 +111,36 @@ app.post('/api/generate-logo', async (req, res) => {
       success: true,
       images: successfulResults,
       count: successfulResults.length,
-      failedCount: failedCount
+      failedCount: failedCount,
     });
-
   } catch (error) {
-    console.error('❌ Logo generation error:', error);
-    
+    console.error("❌ Logo generation error:", error);
+
     // Handle specific OpenAI errors
     if (error.status === 429) {
       return res.status(429).json({
-        error: 'OpenAI rate limit exceeded. Please try again later.',
-        type: 'rate_limit'
-      });
-    }
-    
-    if (error.status === 401) {
-      return res.status(500).json({
-        error: 'Authentication failed with OpenAI service.',
-        type: 'auth_error'
+        error: "OpenAI rate limit exceeded. Please try again later.",
+        type: "rate_limit",
       });
     }
 
-    if (error.message?.includes('billing')) {
+    if (error.status === 401) {
       return res.status(500).json({
-        error: 'OpenAI billing limit reached. Please contact administrator.',
-        type: 'billing_error'
+        error: "Authentication failed with OpenAI service.",
+        type: "auth_error",
+      });
+    }
+
+    if (error.message?.includes("billing")) {
+      return res.status(500).json({
+        error: "OpenAI billing limit reached. Please contact administrator.",
+        type: "billing_error",
       });
     }
 
     res.status(500).json({
-      error: 'Failed to generate logo. Please try again.',
-      type: 'generation_error'
+      error: "Failed to generate logo. Please try again.",
+      type: "generation_error",
     });
   }
 });
@@ -140,18 +148,18 @@ app.post('/api/generate-logo', async (req, res) => {
 // Generate single logo with OpenAI DALL-E 3
 async function generateSingleLogo(prompt, style) {
   const response = await openai.images.generate({
-    model: 'dall-e-3',
+    model: "dall-e-3",
     prompt: prompt,
     n: 1,
-    size: '1024x1024',
+    size: "1024x1024",
     style: style,
-    response_format: 'url',
-    quality: 'standard'
+    response_format: "url",
+    quality: "standard",
   });
 
   const imageUrl = response.data?.[0]?.url;
   if (!imageUrl) {
-    throw new Error('No image URL returned from OpenAI');
+    throw new Error("No image URL returned from OpenAI");
   }
 
   return imageUrl;
@@ -160,10 +168,10 @@ async function generateSingleLogo(prompt, style) {
 // Enhanced prompt creation for professional logos
 function createLogoPrompt(userPrompt, logoSettings = {}) {
   const {
-    logoColor = '#3b82f6',
-    backgroundColor = '#ffffff',
-    typography = 'Arial',
-    shape = 'circle'
+    logoColor = "#3b82f6",
+    backgroundColor = "#ffffff",
+    typography = "Arial",
+    shape = "circle",
   } = logoSettings;
 
   return `Create a professional business logo for "${userPrompt}". Include the text "LOGO" prominently in the logo design. Use ${logoColor} (hex: ${logoColor}) as the primary brand color. Apply ${typography} typography style. Incorporate ${shape} geometric shapes or elements. Place on a clean ${backgroundColor} background.
@@ -188,25 +196,25 @@ Style guidelines:
 
 // Error handling middleware
 app.use((error, req, res, next) => {
-  console.error('Unhandled error:', error);
-  res.status(500).json({ 
-    error: 'Internal server error',
-    requestId: req.id 
+  console.error("Unhandled error:", error);
+  res.status(500).json({
+    error: "Internal server error",
+    requestId: req.id,
   });
 });
 
 // 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({ 
-    error: 'Endpoint not found',
-    availableEndpoints: ['/api/health', '/api/generate-logo']
+app.use("*", (req, res) => {
+  res.status(404).json({
+    error: "Endpoint not found",
+    availableEndpoints: ["/api/health", "/api/generate-logo"],
   });
 });
 
 app.listen(PORT, () => {
   console.log(`🚀 Logo API server running on port ${PORT}`);
   console.log(`🔑 OpenAI API configured: ${!!process.env.OPENAI_API_KEY}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
 });
 
 module.exports = app;

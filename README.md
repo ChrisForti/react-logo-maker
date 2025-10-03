@@ -7,20 +7,24 @@ A simple, intuitive logo m4. Open [http://localhost:5173](http://localhost:5173)
 The app includes **secure AI integration** with OpenAI DALL-E 3:
 
 ### 🔒 Secure Architecture
+
 - **Protected API Keys**: OpenAI keys stored safely on backend server
-- **Rate Limiting**: 10 requests/minute to prevent abuse  
+- **Rate Limiting**: 10 requests/minute to prevent abuse
 - **CORS Protection**: Only authorized domains can access the API
 - **Cost Controls**: Built-in usage limits and monitoring
 
 ### 🚀 Quick Start (Development)
+
 1. **Start the backend**: `cd backend && npm install && npm run dev`
-2. **Start the frontend**: `npm run dev` 
+2. **Start the frontend**: `npm run dev`
 3. **Generate logos**: Click "Generate AI Logos" to test with real OpenAI API
 
 ### 📋 Production Deployment
+
 See `DEPLOYMENT.md` for complete setup instructions:
+
 - Deploy backend to Railway with secure environment variables
-- Deploy frontend to GitHub Pages/Vercel  
+- Deploy frontend to GitHub Pages/Vercel
 - Configure CORS and API endpoints
 
 **Cost**: ~$0.16-0.32 per generation (4 logo variations)
@@ -77,9 +81,11 @@ See `DEPLOYMENT.md` for complete setup instructions:
 ## 🛠️ Technologies Used
 
 **Frontend:**
+
 - ![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-green) ![Vite](https://img.shields.io/badge/Vite-6.0-purple)
 
 **Backend:**
+
 - ![Node.js](https://img.shields.io/badge/Node.js-18+-green) ![Express](https://img.shields.io/badge/Express-4.18-black) ![OpenAI](https://img.shields.io/badge/OpenAI-DALL--E--3-orange)
 
 ## 📦 Build & Deploy
@@ -95,6 +101,7 @@ npm run build             # Build frontend for deployment
 ```
 
 **Deployment Options**:
+
 - **Frontend**: GitHub Pages, Vercel, Netlify
 - **Backend**: Railway (recommended), Render, Heroku
 - **Complete Guide**: See `DEPLOYMENT.md` for step-by-step instructions
