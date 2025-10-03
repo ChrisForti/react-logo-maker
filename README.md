@@ -2,32 +2,28 @@
 
 A simple, intuitive logo m4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-## 🤖 AI Logo Generation Setup (Optional)
+## 🤖 AI Logo Generation
 
-The app works great with professional mock designs, but you can enable real AI generation:
+The app includes **secure AI integration** with OpenAI DALL-E 3:
 
-1. **Get an OpenAI API key**:
+### 🔒 Secure Architecture
+- **Protected API Keys**: OpenAI keys stored safely on backend server
+- **Rate Limiting**: 10 requests/minute to prevent abuse  
+- **CORS Protection**: Only authorized domains can access the API
+- **Cost Controls**: Built-in usage limits and monitoring
 
-   - Sign up at [platform.openai.com](https://platform.openai.com/signup)
-   - Go to [API Keys](https://platform.openai.com/api-keys) and create a new key
-   - Add billing information (DALL-E costs ~$0.04-0.08 per image)
+### 🚀 Quick Start (Development)
+1. **Start the backend**: `cd backend && npm install && npm run dev`
+2. **Start the frontend**: `npm run dev` 
+3. **Generate logos**: Click "Generate AI Logos" to test with real OpenAI API
 
-2. **Configure your environment**:
+### 📋 Production Deployment
+See `DEPLOYMENT.md` for complete setup instructions:
+- Deploy backend to Railway with secure environment variables
+- Deploy frontend to GitHub Pages/Vercel  
+- Configure CORS and API endpoints
 
-   ```bash
-   # Copy the example file
-   cp .env.example .env.local
-
-   # Edit .env.local and add your API key
-   VITE_OPENAI_API_KEY=sk-proj-your-key-here
-   ```
-
-3. **Restart the development server**:
-   ```bash
-   npm run dev
-   ```
-
-**Cost Estimate**: Generating 4 logo variations costs approximately $0.16-0.32
+**Cost**: ~$0.16-0.32 per generation (4 logo variations)
 
 ## 🛠️ Technologies Usedr built with React, TypeScript, and Tailwind CSS. Create custom logos with text, shapes, colors, and effects, then export them as SVG or PNG files.
 
@@ -80,22 +76,28 @@ The app works great with professional mock designs, but you can enable real AI g
 
 ## 🛠️ Technologies Used
 
-- ![React](https://img.shields.io/badge/React-18-blue)
-- ![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)
-- ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-green)
-- ![Vite](https://img.shields.io/badge/Vite-6.0-purple)
+**Frontend:**
+- ![React](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-green) ![Vite](https://img.shields.io/badge/Vite-6.0-purple)
+
+**Backend:**
+- ![Node.js](https://img.shields.io/badge/Node.js-18+-green) ![Express](https://img.shields.io/badge/Express-4.18-black) ![OpenAI](https://img.shields.io/badge/OpenAI-DALL--E--3-orange)
 
 ## 📦 Build & Deploy
 
 ```bash
-# Build for production
+# Frontend only (static files)
 npm run build
-
-# Preview production build
 npm run preview
+
+# Full stack with backend
+cd backend && npm start    # Start backend on Railway/server
+npm run build             # Build frontend for deployment
 ```
 
-The project is configured for GitHub Pages deployment via GitHub Actions.
+**Deployment Options**:
+- **Frontend**: GitHub Pages, Vercel, Netlify
+- **Backend**: Railway (recommended), Render, Heroku
+- **Complete Guide**: See `DEPLOYMENT.md` for step-by-step instructions
 
 ## 🎯 Design Philosophy
 
