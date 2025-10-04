@@ -211,7 +211,7 @@ app.use("*", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Logo API server running on port ${PORT}`);
   console.log(`🔑 OpenAI API configured: ${!!process.env.OPENAI_API_KEY}`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
