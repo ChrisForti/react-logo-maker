@@ -1,8 +1,5 @@
 [build]
-command = "npm install"
+command = "cd backend && npm install"
 
 [deploy]
-startCommand = "npm start"
-
-[settings]
-source = "backend"
+startCommand = "cd backend && npm start"
