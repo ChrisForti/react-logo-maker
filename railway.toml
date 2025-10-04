@@ -2,5 +2,8 @@
 command = "cd backend && npm install"
 
 [deploy]
-startCommand = "cd backend && npm start"
+startCommand = "cd backend && node server.js"
 restartPolicyType = "ON_FAILURE"
+
+[settings]
+nixpacks = true
