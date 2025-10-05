@@ -1,9 +1,30 @@
-// Logo settings interface for AI generation
+// Comprehensive logo settings interface for AI generation
 export interface LogoSettings {
+  // Foundation settings
+  brandName?: string;
   logoColor: string;
   backgroundColor: string;
+
+  // Style settings
   typography: string;
   shape: string;
+
+  // Text and overlays
+  textOverlay?: string;
+  textColor?: string;
+  textSize?: number;
+
+  // Visual effects
+  effects?: string;
+  transparency?: number;
+  rotation?: number;
+
+  // Layout
+  position?: string;
+  padding?: {
+    x: number;
+    y: number;
+  };
 }
 
 // AI service for logo generation using secure backend API
@@ -31,6 +52,10 @@ export class AILogoService {
     console.log("🎯 generateLogos called with prompt:", prompt);
     console.log("🔧 Logo settings:", logoSettings);
 
+    // Enhance the prompt with detailed settings for better AI generation
+    const enhancedPrompt = this.enhancePromptWithSettings(prompt, logoSettings);
+    console.log("🚀 Enhanced prompt:", enhancedPrompt);
+
     try {
       console.log("🤖 Generating AI logos via secure backend API...");
 
@@ -40,7 +65,7 @@ export class AILogoService {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: prompt,
+          prompt: enhancedPrompt,
           logoSettings: logoSettings,
         }),
       });
@@ -206,6 +231,76 @@ export class AILogoService {
 
       return `data:image/svg+xml;base64,${btoa(svg)}`;
     });
+  }
+
+  private enhancePromptWithSettings(
+    prompt: string,
+    settings?: LogoSettings,
+  ): string {
+    if (!settings) return prompt;
+
+    let enhancedPrompt = prompt;
+
+    // Add brand name to prompt
+    if (settings.brandName && settings.brandName.trim()) {
+      enhancedPrompt = `${settings.brandName} logo: ${enhancedPrompt}`;
+    }
+
+    // Add color specifications
+    const colorDetails: string[] = [];
+    if (settings.logoColor && settings.logoColor !== "#3b82f6") {
+      colorDetails.push(`primary color ${settings.logoColor}`);
+    }
+    if (settings.backgroundColor && settings.backgroundColor !== "#ffffff") {
+      colorDetails.push(`background ${settings.backgroundColor}`);
+    }
+    if (settings.textColor) {
+      colorDetails.push(`text color ${settings.textColor}`);
+    }
+
+    // Add style specifications
+    const styleDetails: string[] = [];
+    if (settings.typography && settings.typography !== "modern") {
+      styleDetails.push(`${settings.typography} typography`);
+    }
+    if (settings.shape && settings.shape !== "circle") {
+      styleDetails.push(`${settings.shape} shape`);
+    }
+
+    // Add visual effects
+    const effectDetails: string[] = [];
+    if (settings.effects && settings.effects.trim()) {
+      effectDetails.push(`with ${settings.effects} effects`);
+    }
+    if (settings.rotation && settings.rotation !== 0) {
+      effectDetails.push(`rotated ${settings.rotation} degrees`);
+    }
+    if (settings.transparency && settings.transparency !== 100) {
+      effectDetails.push(`${settings.transparency}% opacity`);
+    }
+
+    // Add text overlay
+    if (settings.textOverlay && settings.textOverlay.trim()) {
+      enhancedPrompt += `, including text "${settings.textOverlay}"`;
+    }
+
+    // Combine all enhancements
+    const allDetails = [...colorDetails, ...styleDetails, ...effectDetails];
+    if (allDetails.length > 0) {
+      enhancedPrompt += `, ${allDetails.join(", ")}`;
+    }
+
+    // Add positioning hints
+    if (settings.position && settings.position !== "center") {
+      enhancedPrompt += `, positioned ${settings.position}`;
+    }
+
+    // Ensure it's clearly a logo
+    if (!enhancedPrompt.toLowerCase().includes("logo")) {
+      enhancedPrompt += " logo design";
+    }
+
+    return enhancedPrompt;
   }
 
   getStatus(): { configured: boolean; mode: string; message: string } {
