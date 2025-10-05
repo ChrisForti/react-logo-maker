@@ -46,12 +46,12 @@ export function AIImageGallery({
                 ? "border-blue-500 ring-2 ring-blue-500 ring-opacity-50"
                 : "border-gray-600 hover:border-blue-400"
             }`}
+            onClick={() => onSelectImage(imageUrl)}
           >
             <img
               src={imageUrl}
               alt={`Generated logo ${index + 1}`}
               className="h-16 w-full rounded bg-white object-contain"
-              onClick={() => onSelectImage(imageUrl)}
               onError={(e) => {
                 // Handle broken images gracefully with inline SVG
                 const target = e.target as HTMLImageElement;
