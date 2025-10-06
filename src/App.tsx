@@ -290,19 +290,43 @@ function App() {
           </button>
         </div>
 
-        {/* Preview Panel */}
-        <div className="flex w-full flex-col items-center justify-start lg:flex-1">
-          {selectedAiImage && (
-            <div className="mb-4 rounded-lg border border-purple-500 bg-purple-900 bg-opacity-30 px-4 py-2">
-              <div className="flex items-center gap-2">
-                <div className="h-2 w-2 animate-pulse rounded-full bg-purple-500"></div>
-                <span className="text-sm font-medium text-purple-200">
-                  ✨ AI Base Logo Active - Customize with tools on the left
-                </span>
+        {/* Preview Panel - Responsive sticky behavior */}
+        <div className="w-full lg:flex-1">
+          {/* Mobile: Static preview at top for better UX */}
+          <div className="mb-6 block lg:hidden">
+            {selectedAiImage && (
+              <div className="mb-4 rounded-lg border border-purple-500 bg-purple-900 bg-opacity-30 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-purple-500"></div>
+                  <span className="text-sm font-medium text-purple-200">
+                    ✨ AI Base Logo Active
+                  </span>
+                </div>
+              </div>
+            )}
+            <div className="rounded-xl bg-slate-700 p-6 shadow-xl">
+              <LogoPreview logoData={logoData} />
+            </div>
+          </div>
+
+          {/* Desktop: Sticky preview that follows scroll */}
+          <div className="hidden lg:block">
+            <div className="sticky top-16 flex flex-col items-center space-y-6 py-8">
+              {selectedAiImage && (
+                <div className="w-full max-w-md rounded-lg border border-purple-500 bg-purple-900 bg-opacity-30 px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-purple-500"></div>
+                    <span className="text-sm font-medium text-purple-200">
+                      ✨ AI Base Logo Active - Customize with tools on the left
+                    </span>
+                  </div>
+                </div>
+              )}
+              <div className="w-full max-w-md rounded-xl bg-slate-700 p-8 shadow-xl">
+                <LogoPreview logoData={logoData} />
               </div>
             </div>
-          )}
-          <LogoPreview logoData={logoData} />
+          </div>
         </div>
       </div>
 
