@@ -1,3 +1,5 @@
+import { downloadFile, blobToDataURL } from "../utils/downloadUtils";
+
 interface AIGalleryModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,6 +22,55 @@ export function AIGalleryModal({
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       onClose();
+    }
+  };
+
+  // Handle individual image download
+  const handleDownloadImage = async (imageUrl: string, index: number) => {
+    try {
+      // Determine file extension from data URL or default to svg
+      let fileExtension = 'svg';
+      let blob: Blob;
+      let fallbackDataUrl = imageUrl;
+
+      if (imageUrl.startsWith('data:')) {
+        // It's a data URL
+        const mimeMatch = imageUrl.match(/data:([^;]+);/);
+        if (mimeMatch) {
+          const mimeType = mimeMatch[1];
+          if (mimeType.includes('png')) {
+            fileExtension = 'png';
+          } else if (mimeType.includes('jpeg') || mimeType.includes('jpg')) {
+            fileExtension = 'jpg';
+          }
+        }
+
+        // Convert data URL to blob
+        const response = await fetch(imageUrl);
+        blob = await response.blob();
+      } else {
+        // It's a regular URL, fetch it
+        const response = await fetch(imageUrl);
+        blob = await response.blob();
+
+        // Try to determine extension from blob type
+        if (blob.type.includes('png')) {
+          fileExtension = 'png';
+        } else if (blob.type.includes('jpeg') || blob.type.includes('jpg')) {
+          fileExtension = 'jpg';
+        }
+
+        // For mobile fallback, convert to data URL
+        fallbackDataUrl = await blobToDataURL(blob);
+      }
+
+      const filename = `ai-logo-${index + 1}.${fileExtension}`;
+      await downloadFile(blob, filename, fallbackDataUrl);
+      
+      console.log(`✅ AI logo #${index + 1} downloaded successfully!`);
+    } catch (error) {
+      console.error('❌ Error downloading AI logo:', error);
+      alert('Error downloading logo. Please try long-pressing the image and selecting "Save Image".');
     }
   };
 
@@ -120,13 +171,7 @@ export function AIGalleryModal({
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      // Create download link for individual image
-                      const link = document.createElement("a");
-                      link.href = imageUrl;
-                      link.download = `ai-logo-${index + 1}.svg`;
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
+                      handleDownloadImage(imageUrl, index);
                     }}
                     className="touch-manipulation rounded bg-gray-800 bg-opacity-80 p-1.5 text-white transition-colors hover:bg-gray-700 sm:p-2"
                     title="Download this logo"

@@ -1,3 +1,5 @@
+import { downloadSVG as downloadSVGUtil, downloadPNG as downloadPNGUtil } from "../utils/downloadUtils";
+
 interface LogoData {
   brand: string;
   logoSize: number;
@@ -48,66 +50,39 @@ export function LogoPreview({ logoData }: LogoPreviewProps) {
   } = logoData;
 
   // Export as SVG
-  const downloadSVG = () => {
-    const svgElement = document.getElementById("logo-svg");
-    if (!svgElement) return;
+  const downloadSVG = async () => {
+    const svgElement = document.getElementById("logo-svg") as SVGElement | null;
+    if (!svgElement) {
+      alert("Error: Logo preview not found. Please try again.");
+      return;
+    }
 
-    const svgData = new XMLSerializer().serializeToString(svgElement);
-    const svgBlob = new Blob([svgData], {
-      type: "image/svg+xml;charset=utf-8",
-    });
-    const svgUrl = URL.createObjectURL(svgBlob);
-
-    const downloadLink = document.createElement("a");
-    downloadLink.href = svgUrl;
-    downloadLink.download = `${logoData.brand || "logo"}.svg`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-    URL.revokeObjectURL(svgUrl);
+    try {
+      const filename = `${logoData.brand || "logo"}.svg`;
+      await downloadSVGUtil(svgElement, filename);
+      console.log("✅ SVG downloaded successfully!");
+    } catch (error) {
+      console.error("❌ Error downloading SVG:", error);
+      alert("Error downloading SVG. Please try again or use a different browser.");
+    }
   };
 
   // Export as PNG
-  const downloadPNG = () => {
-    const svgElement = document.getElementById("logo-svg");
-    if (!svgElement) return;
+  const downloadPNG = async () => {
+    const svgElement = document.getElementById("logo-svg") as SVGElement | null;
+    if (!svgElement) {
+      alert("Error: Logo preview not found. Please try again.");
+      return;
+    }
 
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Get the actual rendered size of the SVG
-    const rect = svgElement.getBoundingClientRect();
-    const size = Math.min(rect.width, rect.height, 600); // Max 600px for good quality
-
-    canvas.width = size;
-    canvas.height = size;
-
-    const svgData = new XMLSerializer().serializeToString(svgElement);
-    const svgBlob = new Blob([svgData], {
-      type: "image/svg+xml;charset=utf-8",
-    });
-    const url = URL.createObjectURL(svgBlob);
-
-    const img = new Image();
-    img.onload = () => {
-      ctx.fillStyle = backgroundColor || "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, size, size);
-
-      canvas.toBlob((blob) => {
-        if (!blob) return;
-        const url = URL.createObjectURL(blob);
-        const downloadLink = document.createElement("a");
-        downloadLink.href = url;
-        downloadLink.download = `${logoData.brand || "logo"}.png`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(url);
-      });
-    };
-    img.src = url;
+    try {
+      const filename = `${logoData.brand || "logo"}.png`;
+      await downloadPNGUtil(svgElement, filename, backgroundColor);
+      console.log("✅ PNG downloaded successfully!");
+    } catch (error) {
+      console.error("❌ Error downloading PNG:", error);
+      alert("Error downloading PNG. Please try again or use a different browser.");
+    }
   };
 
   // Simple shape rendering based on logoShape

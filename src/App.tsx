@@ -4,6 +4,7 @@ import EditPane from "./components/EditPane";
 import { LogoPreview } from "./components/LogoPreview";
 import { AIGalleryModal } from "./components/AIGalleryModal";
 import { useMultipleToggles } from "./hooks/useToggle";
+import { downloadSVG } from "./utils/downloadUtils";
 
 function App() {
   const [brand, setBrand] = useState("My Brand"); // create the state with demo values
@@ -141,26 +142,14 @@ function App() {
     setValue: setAiPrompt,
   };
 
-  function handleSubmit() {
+  async function handleSubmit() {
     try {
       // Trigger the logo export from LogoPreview component
-      const logoPreviewElement = document.querySelector("#logo-svg");
+      const logoPreviewElement = document.querySelector("#logo-svg") as SVGElement | null;
       if (logoPreviewElement) {
-        // Trigger SVG download
-        const svgElement = logoPreviewElement.cloneNode(true) as SVGElement;
-        const svgData = new XMLSerializer().serializeToString(svgElement);
-        const svgBlob = new Blob([svgData], {
-          type: "image/svg+xml;charset=utf-8",
-        });
-        const svgUrl = URL.createObjectURL(svgBlob);
-
-        const downloadLink = document.createElement("a");
-        downloadLink.href = svgUrl;
-        downloadLink.download = `${brand.replace(/\s+/g, "-").toLowerCase()}-logo.svg`;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(svgUrl);
+        // Trigger SVG download using utility function
+        const filename = `${brand.replace(/\s+/g, "-").toLowerCase()}-logo.svg`;
+        await downloadSVG(logoPreviewElement, filename);
 
         // Show success message
         console.log("✅ Logo downloaded successfully as SVG!");
@@ -172,7 +161,7 @@ function App() {
       }
     } catch (error) {
       console.error("❌ Error downloading logo:", error);
-      alert("Error downloading logo. Please try again.");
+      alert("Error downloading logo. Please try again or use a different browser.");
     }
   }
 
