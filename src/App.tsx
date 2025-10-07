@@ -145,7 +145,9 @@ function App() {
   async function handleSubmit() {
     try {
       // Trigger the logo export from LogoPreview component
-      const logoPreviewElement = document.querySelector("#logo-svg") as SVGElement | null;
+      const logoPreviewElement = document.querySelector(
+        "#logo-svg",
+      ) as SVGElement | null;
       if (logoPreviewElement) {
         // Trigger SVG download using utility function
         const filename = `${brand.replace(/\s+/g, "-").toLowerCase()}-logo.svg`;
@@ -161,7 +163,9 @@ function App() {
       }
     } catch (error) {
       console.error("❌ Error downloading logo:", error);
-      alert("Error downloading logo. Please try again or use a different browser.");
+      alert(
+        "Error downloading logo. Please try again or use a different browser.",
+      );
     }
   }
 
@@ -299,22 +303,24 @@ function App() {
           </div>
 
           {/* Desktop: Sticky preview that follows scroll */}
-          <div className="hidden lg:block">
-            <div className="sticky top-16 flex flex-col items-center space-y-6 py-8">
+          <div className="hidden lg:block lg:h-screen lg:overflow-y-auto">
+            <div className="sticky top-0 z-10 flex h-fit flex-col items-center space-y-4 bg-slate-600 py-6">
               {selectedAiImage && (
-                <div className="w-full max-w-md rounded-lg border border-purple-500 bg-purple-900 bg-opacity-30 px-4 py-3">
+                <div className="w-full max-w-md rounded-lg border border-purple-500 bg-purple-900/90 px-4 py-3 shadow-lg backdrop-blur">
                   <div className="flex items-center gap-2">
-                    <div className="h-2 w-2 animate-pulse rounded-full bg-purple-500"></div>
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-purple-400"></div>
                     <span className="text-sm font-medium text-purple-200">
                       ✨ AI Base Logo Active - Customize with tools on the left
                     </span>
                   </div>
                 </div>
               )}
-              <div className="w-full max-w-md rounded-xl bg-slate-700 p-8 shadow-xl">
+              <div className="w-full max-w-md rounded-xl bg-slate-700 p-6 shadow-2xl ring-1 ring-slate-600/50">
                 <LogoPreview logoData={logoData} />
               </div>
             </div>
+            {/* Spacer to ensure scrollable content */}
+            <div className="h-96"></div>
           </div>
         </div>
       </div>

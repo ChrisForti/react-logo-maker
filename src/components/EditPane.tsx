@@ -945,7 +945,12 @@ export default function EditPane({
           {/* Image Filter Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Image Filter</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">
+                  Image Filter
+                </h3>
+                <InfoTooltip content="Apply CSS filters to uploaded images such as blur, brightness, contrast, grayscale, or sepia effects." />
+              </div>
               <Toggle
                 label="Image Filter"
                 checked={showImageFilter}
@@ -972,7 +977,10 @@ export default function EditPane({
           {/* Animation Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Animation</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Animation</h3>
+                <InfoTooltip content="Add CSS animations to your logo such as rotation, pulse, bounce, or fade effects. Use CSS animation properties." />
+              </div>
               <Toggle
                 label="Animation"
                 checked={showAnimation}
@@ -999,7 +1007,10 @@ export default function EditPane({
           {/* Margin Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Margin</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Margin</h3>
+                <InfoTooltip content="Add outer spacing around your logo elements. Margin creates space between the logo and its container edges." />
+              </div>
               <Toggle
                 label="Margin"
                 checked={showMargin}
@@ -1026,7 +1037,10 @@ export default function EditPane({
           {/* Colors Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Colors</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Colors</h3>
+                <InfoTooltip content="Customize the color scheme of your logo. Choose colors for text, background, borders, and other elements to match your brand identity." />
+              </div>
               <Toggle label="Colors" checked={true} onChange={() => {}} />
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -1061,7 +1075,10 @@ export default function EditPane({
           {/* Background Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Background</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Background</h3>
+                <InfoTooltip content="Control whether your logo has a background color or remains transparent. Background color is set in the Colors section above." />
+              </div>
               <Toggle
                 label="Background"
                 checked={showBackground}
@@ -1083,7 +1100,10 @@ export default function EditPane({
           {/* Border Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Border</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Border</h3>
+                <InfoTooltip content="Add a border around your logo elements. Border color is set in the Colors section, and border size is controlled in the Size section below." />
+              </div>
               <Toggle
                 label="Border"
                 checked={showBorder}
@@ -1106,7 +1126,10 @@ export default function EditPane({
           {/* Size Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Size</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Size</h3>
+                <InfoTooltip content="Control the dimensions of your logo elements including overall size, border thickness, and other sizing properties." />
+              </div>
               <Toggle label="Size" checked={showSize} onChange={setShowSize} />
             </div>
             {showSize && (
@@ -1144,7 +1167,10 @@ export default function EditPane({
           {/* Padding Section */}
           <div className="rounded-lg bg-slate-600 p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-white">Padding</h3>
+              <div className="flex items-center">
+                <h3 className="text-xl font-semibold text-white">Padding</h3>
+                <InfoTooltip content="Add inner spacing within your logo elements. Padding creates space between the content and the element's border." />
+              </div>
               <Toggle
                 label="Padding"
                 checked={showPadding}
