@@ -3,11 +3,35 @@
 @tailwind utilities;
 
 /* Prevent horizontal scrolling only */
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
 /* Smooth scrolling for better UX */
 html {
   scroll-behavior: smooth;
+}
+
+/* Fixed positioning for half-screen preview */
+.fixed-preview {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: calc(50vw - 3rem);
+  height: calc(100vh - 3rem);
+  overflow-y: auto;
+  z-index: 20;
+}
+
+@media (max-width: 1023px) {
+  .fixed-preview {
+    position: static;
+    width: auto;
+    height: auto;
+    max-width: none;
+    right: auto;
+    top: auto;
+    overflow-y: visible;
+  }
 }
