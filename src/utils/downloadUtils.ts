@@ -6,11 +6,12 @@
  * Detects if the user is on a mobile device
  */
 export function isMobileDevice(): boolean {
-  // Check for mobile user agents
+  // Check for mobile user agents with fallback to empty string
   const userAgent =
     navigator.userAgent ||
     navigator.vendor ||
-    (window as Window & { opera?: string }).opera;
+    (window as Window & { opera?: string }).opera ||
+    "";
 
   // More comprehensive mobile detection
   const mobileRegex =
@@ -31,7 +32,8 @@ export function isIOSSafari(): boolean {
   const userAgent =
     navigator.userAgent ||
     navigator.vendor ||
-    (window as Window & { opera?: string }).opera;
+    (window as Window & { opera?: string }).opera ||
+    "";
   const isIOS =
     /iPad|iPhone|iPod/.test(userAgent) &&
     !(window as Window & { MSStream?: unknown }).MSStream;
