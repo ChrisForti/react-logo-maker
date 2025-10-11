@@ -246,6 +246,15 @@ export class AILogoService {
       enhancedPrompt = `${settings.brandName} logo: ${enhancedPrompt}`;
     }
 
+    // If we have text overlay but no brand name, use text overlay as the primary text
+    if (
+      !settings.brandName &&
+      settings.textOverlay &&
+      settings.textOverlay.trim()
+    ) {
+      enhancedPrompt = `${settings.textOverlay} logo: ${enhancedPrompt}`;
+    }
+
     // Add color specifications
     const colorDetails: string[] = [];
     if (settings.logoColor && settings.logoColor !== "#3b82f6") {
@@ -279,9 +288,13 @@ export class AILogoService {
       effectDetails.push(`${settings.transparency}% opacity`);
     }
 
-    // Add text overlay
+    // Add text overlay with enhanced spelling accuracy for difficult words
     if (settings.textOverlay && settings.textOverlay.trim()) {
-      enhancedPrompt += `, including text "${settings.textOverlay}"`;
+      const text = settings.textOverlay;
+      const letterSpacing = text.split("").join(" ");
+      const phonetic = this.getPhoneticSpelling(text);
+
+      enhancedPrompt += `, featuring the exact text "${text}" (pronounced ${phonetic}). The spelling is critical: ${letterSpacing}. Each letter must be perfect: ${text.toUpperCase()}. This is a proper name that must be spelled exactly right.`;
     }
 
     // Combine all enhancements
@@ -300,7 +313,42 @@ export class AILogoService {
       enhancedPrompt += " logo design";
     }
 
+    // Add final emphasis on text accuracy if text overlay is present
+    if (settings?.textOverlay && settings.textOverlay.trim()) {
+      enhancedPrompt +=
+        ". IMPORTANT: All text must be spelled exactly and correctly with no typos or errors. Pay special attention to spelling accuracy.";
+    }
+
     return enhancedPrompt;
+  }
+
+  private getPhoneticSpelling(text: string): string {
+    // Simple phonetic helper for common difficult names
+    const phonetics: { [key: string]: string } = {
+      kelleigh: "KEL-ee",
+      leigh: "lee",
+      eigh: "ay",
+      kelly: "KEL-ee",
+      kelli: "KEL-ee",
+    };
+
+    const lower = text.toLowerCase();
+
+    // Check for exact matches first
+    if (phonetics[lower]) {
+      return phonetics[lower];
+    }
+
+    // Check for partial matches (endings)
+    for (const [pattern, pronunciation] of Object.entries(phonetics)) {
+      if (lower.endsWith(pattern)) {
+        const prefix = lower.substring(0, lower.length - pattern.length);
+        return `${prefix.toUpperCase()}-${pronunciation}`;
+      }
+    }
+
+    // Default: just break it into syllables
+    return text.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
   }
 
   getStatus(): { configured: boolean; mode: string; message: string } {

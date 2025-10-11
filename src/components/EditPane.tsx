@@ -214,10 +214,17 @@ export default function EditPane({
 
       // Create logo settings object from all inputs
       const logoSettings = {
+        brandName: brandInput.value,
         logoColor: colorInputs[0]?.value, // Logo color
         backgroundColor: colorInputs[2]?.value, // Background color
+        textColor: colorInputs[0]?.value, // Use logo color for text
         typography: styleInput.value,
         shape: shapeInput.value,
+        textOverlay: textInput.value, // This is the key missing piece!
+        effects: effectsInput.value,
+        rotation: rotationInput.value,
+        transparency: transparencyInput.value,
+        position: positionInput.value,
       };
 
       console.log("AI Generation with settings:", logoSettings);
