@@ -1,3 +1,5 @@
+import { textGenerationService } from './textGeneration';
+
 // Comprehensive logo settings interface for AI generation
 export interface LogoSettings {
   // Foundation settings
@@ -53,7 +55,7 @@ export class AILogoService {
     console.log("🔧 Logo settings:", logoSettings);
 
     // Enhance the prompt with detailed settings for better AI generation
-    const enhancedPrompt = this.enhancePromptWithSettings(prompt, logoSettings);
+    const enhancedPrompt = textGenerationService.buildPrompt(prompt, logoSettings);
     console.log("🚀 Enhanced prompt:", enhancedPrompt);
 
     try {
@@ -233,123 +235,7 @@ export class AILogoService {
     });
   }
 
-  private enhancePromptWithSettings(
-    prompt: string,
-    settings?: LogoSettings,
-  ): string {
-    if (!settings) return prompt;
 
-    let enhancedPrompt = prompt;
-
-    // Add brand name to prompt
-    if (settings.brandName && settings.brandName.trim()) {
-      enhancedPrompt = `${settings.brandName} logo: ${enhancedPrompt}`;
-    }
-
-    // If we have text overlay but no brand name, use text overlay as the primary text
-    if (
-      !settings.brandName &&
-      settings.textOverlay &&
-      settings.textOverlay.trim()
-    ) {
-      enhancedPrompt = `${settings.textOverlay} logo: ${enhancedPrompt}`;
-    }
-
-    // Add color specifications
-    const colorDetails: string[] = [];
-    if (settings.logoColor && settings.logoColor !== "#3b82f6") {
-      colorDetails.push(`primary color ${settings.logoColor}`);
-    }
-    if (settings.backgroundColor && settings.backgroundColor !== "#ffffff") {
-      colorDetails.push(`background ${settings.backgroundColor}`);
-    }
-    if (settings.textColor) {
-      colorDetails.push(`text color ${settings.textColor}`);
-    }
-
-    // Add style specifications
-    const styleDetails: string[] = [];
-    if (settings.typography && settings.typography !== "modern") {
-      styleDetails.push(`${settings.typography} typography`);
-    }
-    if (settings.shape && settings.shape !== "circle") {
-      styleDetails.push(`${settings.shape} shape`);
-    }
-
-    // Add visual effects
-    const effectDetails: string[] = [];
-    if (settings.effects && settings.effects.trim()) {
-      effectDetails.push(`with ${settings.effects} effects`);
-    }
-    if (settings.rotation && settings.rotation !== 0) {
-      effectDetails.push(`rotated ${settings.rotation} degrees`);
-    }
-    if (settings.transparency && settings.transparency !== 100) {
-      effectDetails.push(`${settings.transparency}% opacity`);
-    }
-
-    // Add text overlay with enhanced spelling accuracy for difficult words
-    if (settings.textOverlay && settings.textOverlay.trim()) {
-      const text = settings.textOverlay;
-      const letterSpacing = text.split("").join(" ");
-      const phonetic = this.getPhoneticSpelling(text);
-
-      enhancedPrompt += `, featuring the exact text "${text}" (pronounced ${phonetic}). The spelling is critical: ${letterSpacing}. Each letter must be perfect: ${text.toUpperCase()}. This is a proper name that must be spelled exactly right.`;
-    }
-
-    // Combine all enhancements
-    const allDetails = [...colorDetails, ...styleDetails, ...effectDetails];
-    if (allDetails.length > 0) {
-      enhancedPrompt += `, ${allDetails.join(", ")}`;
-    }
-
-    // Add positioning hints
-    if (settings.position && settings.position !== "center") {
-      enhancedPrompt += `, positioned ${settings.position}`;
-    }
-
-    // Ensure it's clearly a logo
-    if (!enhancedPrompt.toLowerCase().includes("logo")) {
-      enhancedPrompt += " logo design";
-    }
-
-    // Add final emphasis on text accuracy if text overlay is present
-    if (settings?.textOverlay && settings.textOverlay.trim()) {
-      enhancedPrompt +=
-        ". IMPORTANT: All text must be spelled exactly and correctly with no typos or errors. Pay special attention to spelling accuracy.";
-    }
-
-    return enhancedPrompt;
-  }
-
-  private getPhoneticSpelling(text: string): string {
-    // Simple phonetic helper for common difficult names
-    const phonetics: { [key: string]: string } = {
-      kelleigh: "KEL-ee",
-      leigh: "lee",
-      eigh: "ay",
-      kelly: "KEL-ee",
-      kelli: "KEL-ee",
-    };
-
-    const lower = text.toLowerCase();
-
-    // Check for exact matches first
-    if (phonetics[lower]) {
-      return phonetics[lower];
-    }
-
-    // Check for partial matches (endings)
-    for (const [pattern, pronunciation] of Object.entries(phonetics)) {
-      if (lower.endsWith(pattern)) {
-        const prefix = lower.substring(0, lower.length - pattern.length);
-        return `${prefix.toUpperCase()}-${pronunciation}`;
-      }
-    }
-
-    // Default: just break it into syllables
-    return text.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-  }
 
   getStatus(): { configured: boolean; mode: string; message: string } {
     return {
