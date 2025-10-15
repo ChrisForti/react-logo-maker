@@ -76,6 +76,7 @@ type EditPaneProps = {
   setSelectedAiImage: React.Dispatch<React.SetStateAction<string>>;
   selectedAiImage: string;
   onOpenGalleryModal: () => void;
+  onAddText?: (imageUrl: string) => void;
 };
 
 export default function EditPane({
@@ -136,6 +137,7 @@ export default function EditPane({
   setSelectedAiImage,
   selectedAiImage,
   onOpenGalleryModal,
+  onAddText,
 }: EditPaneProps) {
   // Path selection state
   type LogoPath = "traditional" | "ai-enhanced";
@@ -732,6 +734,7 @@ export default function EditPane({
                 onSelectImage={handleSelectAILogo}
                 onClearImages={handleClearAIImages}
                 selectedImage={selectedAiImage}
+                onAddText={onAddText}
               />
             </div>
           )}

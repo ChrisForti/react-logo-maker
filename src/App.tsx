@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import EditPane from "./components/EditPane";
 import { LogoPreview } from "./components/LogoPreview";
 import { AIGalleryModal } from "./components/AIGalleryModal";
+import TextOverlayEditor, { TextElement } from "./components/TextOverlayEditor";
 import { useMultipleToggles } from "./hooks/useToggle";
 import { downloadSVG } from "./utils/downloadUtils";
 
@@ -31,6 +32,17 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedAiImage, setSelectedAiImage] = useState("");
   const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
+
+  // Text Overlay Editor state
+  const [textOverlayEditor, setTextOverlayEditor] = useState<{
+    isOpen: boolean;
+    imageUrl: string;
+    elements: TextElement[];
+  }>({
+    isOpen: false,
+    imageUrl: '',
+    elements: []
+  });
 
   // Toggle states using custom hook
   const { toggles, setToggle } = useMultipleToggles({
@@ -169,6 +181,31 @@ function App() {
     }
   }
 
+  // Text overlay handlers
+  const handleAddText = (imageUrl: string) => {
+    setTextOverlayEditor({
+      isOpen: true,
+      imageUrl,
+      elements: []
+    });
+  };
+
+  const handleSaveTextOverlay = (elements: TextElement[]) => {
+    setTextOverlayEditor(prev => ({
+      ...prev,
+      isOpen: false,
+      elements
+    }));
+    // TODO: Implement canvas composition and update the selected image
+  };
+
+  const handleCancelTextOverlay = () => {
+    setTextOverlayEditor(prev => ({
+      ...prev,
+      isOpen: false
+    }));
+  };
+
   const logoData = {
     brand,
     logoSize,
@@ -273,6 +310,7 @@ function App() {
             setSelectedAiImage={setSelectedAiImage}
             selectedAiImage={selectedAiImage}
             onOpenGalleryModal={() => setIsGalleryModalOpen(true)}
+            onAddText={handleAddText}
           />
           <button
             type="submit"
@@ -335,6 +373,16 @@ function App() {
         }}
         selectedImage={selectedAiImage}
       />
+
+      {/* Text Overlay Editor */}
+      {textOverlayEditor.isOpen && (
+        <TextOverlayEditor
+          logoImage={textOverlayEditor.imageUrl}
+          onSave={handleSaveTextOverlay}
+          onCancel={handleCancelTextOverlay}
+          initialElements={textOverlayEditor.elements}
+        />
+      )}
     </div>
   );
 }
