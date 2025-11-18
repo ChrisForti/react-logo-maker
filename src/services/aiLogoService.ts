@@ -1,4 +1,4 @@
-import { textGenerationService } from './textGeneration';
+import { textGenerationService } from "./textGeneration";
 
 // Comprehensive logo settings interface for AI generation
 export interface LogoSettings {
@@ -55,7 +55,10 @@ export class AILogoService {
     console.log("🔧 Logo settings:", logoSettings);
 
     // Enhance the prompt with detailed settings for better AI generation
-    const enhancedPrompt = textGenerationService.buildPrompt(prompt, logoSettings);
+    const enhancedPrompt = textGenerationService.buildPrompt(
+      prompt,
+      logoSettings,
+    );
     console.log("🚀 Enhanced prompt:", enhancedPrompt);
 
     try {
@@ -234,8 +237,6 @@ export class AILogoService {
       return `data:image/svg+xml;base64,${btoa(svg)}`;
     });
   }
-
-
 
   getStatus(): { configured: boolean; mode: string; message: string } {
     return {

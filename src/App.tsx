@@ -40,8 +40,8 @@ function App() {
     elements: TextElement[];
   }>({
     isOpen: false,
-    imageUrl: '',
-    elements: []
+    imageUrl: "",
+    elements: [],
   });
 
   // Toggle states using custom hook
@@ -186,23 +186,23 @@ function App() {
     setTextOverlayEditor({
       isOpen: true,
       imageUrl,
-      elements: []
+      elements: [],
     });
   };
 
   const handleSaveTextOverlay = (elements: TextElement[]) => {
-    setTextOverlayEditor(prev => ({
+    setTextOverlayEditor((prev) => ({
       ...prev,
       isOpen: false,
-      elements
+      elements,
     }));
     // TODO: Implement canvas composition and update the selected image
   };
 
   const handleCancelTextOverlay = () => {
-    setTextOverlayEditor(prev => ({
+    setTextOverlayEditor((prev) => ({
       ...prev,
-      isOpen: false
+      isOpen: false,
     }));
   };
 
