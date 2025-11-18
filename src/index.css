@@ -16,10 +16,10 @@ html {
 /* Fixed positioning for half-screen preview */
 .fixed-preview {
   position: fixed;
-  top: 1.5rem;
+  top: 7rem;
   right: 1.5rem;
   width: calc(50vw - 3rem);
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 8.5rem);
   overflow-y: auto;
   z-index: 20;
 }

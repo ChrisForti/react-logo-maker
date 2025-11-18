@@ -3,6 +3,7 @@ interface AIImageGalleryProps {
   onSelectImage: (imageUrl: string) => void;
   onClearImages: () => void;
   selectedImage?: string;
+  onAddText?: (imageUrl: string) => void;
 }
 
 export function AIImageGallery({
@@ -10,8 +11,10 @@ export function AIImageGallery({
   onSelectImage,
   onClearImages,
   selectedImage,
+  onAddText,
 }: AIImageGalleryProps) {
   console.log("🖼️ AIImageGallery received images:", images.length);
+  console.log("🎯 AIImageGallery received onAddText prop:", !!onAddText);
   if (images.length > 0) {
     console.log(
       "📋 Gallery image URLs:",
@@ -66,16 +69,29 @@ export function AIImageGallery({
               }}
             />
 
-            {/* Overlay with selection indicator */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 transition-all duration-200 group-hover:bg-opacity-40">
+            {/* Overlay with selection indicator and actions */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-0 transition-all duration-200 group-hover:bg-opacity-60">
               {selectedImage === imageUrl ? (
-                <div className="rounded-md bg-blue-500 px-2 py-1 text-xs font-medium text-white">
+                <div className="mb-2 rounded-md bg-blue-500 px-2 py-1 text-xs font-medium text-white">
                   ✓ Selected
                 </div>
               ) : (
-                <div className="rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-800 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <div className="mb-2 rounded-md bg-white px-2 py-1 text-xs font-medium text-gray-800 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                   Select This
                 </div>
+              )}
+
+              {/* Add Text Button */}
+              {onAddText && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAddText(imageUrl);
+                  }}
+                  className="rounded bg-green-600 px-2 py-1 text-xs text-white opacity-100 transition-all duration-200 hover:bg-green-500"
+                >
+                  + Add Text
+                </button>
               )}
             </div>
 
