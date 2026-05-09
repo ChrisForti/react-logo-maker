@@ -210,6 +210,21 @@ export default function EditPane({
 
   // AI generation handlers
   async function handleGenerateAI() {
+    // Validate that Text Overlay is filled in
+    if (
+      !textInput.value ||
+      textInput.value.trim() === "" ||
+      textInput.value === "LOGO"
+    ) {
+      alert(
+        "⚠️ Please fill in the 'Text Overlay' field first!\n\n" +
+          "This is your brand name or company name that will appear in the logo.\n\n" +
+          "Example: 'Acme Inc', 'TechFlow', 'Your Brand Name'\n\n" +
+          "You'll find this field in Step 1: Foundation Settings (the yellow highlighted box).",
+      );
+      return;
+    }
+
     setIsGenerating(true);
     try {
       const { aiLogoService } = await import("../services/aiLogoService");
@@ -455,13 +470,16 @@ export default function EditPane({
           </div>
 
           {/* Text Overlay */}
-          <div className="rounded bg-slate-600 p-3">
+          <div className="rounded bg-slate-600 p-3 ring-2 ring-yellow-500 ring-opacity-50">
             <div className="mb-2 flex items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 <label className="text-sm font-medium text-white">
-                  Text Overlay
+                  ⭐ Text Overlay
                 </label>
-                <InfoTooltip content="Additional text to include in your logo, such as taglines, descriptions, or secondary branding elements." />
+                <span className="rounded bg-yellow-500 px-1.5 py-0.5 text-xs font-bold text-black">
+                  REQUIRED
+                </span>
+                <InfoTooltip content="Your brand name or company name that will appear in the AI-generated logo. This is the PRIMARY text - fill this in before generating!" />
               </div>
               <Toggle label="Text" checked={showText} onChange={setShowText} />
             </div>
@@ -470,8 +488,8 @@ export default function EditPane({
                 type="text"
                 value={textInput.value}
                 onChange={(e) => textInput.setValue(e.target.value)}
-                placeholder="e.g., tagline, description, or subtitle"
-                className="w-full rounded bg-gray-800 p-2 text-sm text-white placeholder-gray-400"
+                placeholder="e.g., 'Acme Inc', 'TechFlow', 'Your Brand Name'"
+                className="w-full rounded bg-gray-800 p-2 text-sm text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500"
               />
             )}
           </div>
@@ -692,12 +710,30 @@ export default function EditPane({
               {/* Helpful workflow note */}
               <div className="rounded-md border border-blue-500 bg-blue-900 bg-opacity-40 p-3">
                 <p className="text-sm text-blue-200">
-                  💡 <strong>Optimal Workflow:</strong> The AI will bake in all
-                  your foundation settings from Step 1. For best results:
-                  complete your foundation setup above, then generate to bake
-                  those preferences into unique logo designs!
+                  💡 <strong>Optimal Workflow:</strong>
+                </p>
+                <ol className="mt-2 space-y-1 text-sm text-blue-200">
+                  <li>
+                    1️⃣ Fill in <strong>Text Overlay</strong> with your brand
+                    name (required!)
+                  </li>
+                  <li>
+                    2️⃣ Set your colors, style, and other foundation preferences
+                  </li>
+                  <li>3️⃣ Describe the design style below</li>
+                  <li>4️⃣ Click Generate - AI will bake everything together!</li>
+                </ol>
+              </div>
+              {/* Important reminder about Text Overlay */}
+              <div className="rounded-md border border-yellow-500 bg-yellow-900 bg-opacity-30 p-3">
+                <p className="text-sm text-yellow-200">
+                  ⚠️ <strong>Don't forget:</strong> Make sure you've filled in
+                  the <strong>Text Overlay</strong> field in Step 1 with your
+                  brand name (e.g., "Acme Inc"). The AI will use that as the
+                  main text in your logo!
                 </p>
               </div>
+
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-300">
                   {aiInput.label}
@@ -705,7 +741,7 @@ export default function EditPane({
                 <textarea
                   value={aiInput.value}
                   onChange={(event) => aiInput.setValue(event.target.value)}
-                  placeholder="Describe the logo you want to generate (e.g., 'modern tech company logo with blue and green colors')"
+                  placeholder="Describe the style/theme (e.g., 'modern tech company logo', 'elegant minimalist design', 'playful cartoon style')"
                   rows={3}
                   className="w-full rounded-md border border-gray-600 bg-slate-800 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
