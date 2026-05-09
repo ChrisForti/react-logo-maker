@@ -47,7 +47,7 @@ function App() {
   // Toggle states using custom hook
   const { toggles, setToggle } = useMultipleToggles({
     brand: true,
-    shape: true,
+    shape: false,
     text: true,
     border: true,
     background: true,
